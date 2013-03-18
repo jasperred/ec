@@ -275,7 +275,7 @@ public class ProductServicesImpl extends HibernateDaoSupport implements
 	}
 	
 	public Map searchSku(Map param, int currentPage, int pageRow) {
-		StringBuffer hql = new StringBuffer(" from ItemMaster im, SkuMaster sm where im.id = sm.ItemId");
+		StringBuffer hql = new StringBuffer(" from ItemMaster im left outer join im.skuMaster sm ");
 		StringBuffer con = new StringBuffer();
 		List conList = new ArrayList();
 		if (!WebUtil.isNull(param.get("ItemName"))) {
@@ -310,7 +310,7 @@ public class ProductServicesImpl extends HibernateDaoSupport implements
 		}
 		
 		if (con.length() > 0)
-			hql.append(" and " + con.toString());
+			hql.append(" where " + con.toString());
 
 		Session session = this.getSession();
 		Map result = new HashMap();

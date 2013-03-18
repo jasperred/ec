@@ -32,7 +32,7 @@ public class ItemServicesImpl extends HibernateDaoSupport implements ItemService
 			result.put("COUNT_ROW", 0);
 			return result;
 		}
-		StringBuffer hql = new StringBuffer(" from ItemMaster im left outer join fetch im.skuMaster sm");
+		StringBuffer hql = new StringBuffer(" from ItemMaster im left outer join im.skuMaster sm");
 		StringBuffer con = new StringBuffer();
 		List conList = new ArrayList();
 		// 分公司权限判断

@@ -329,7 +329,7 @@ Ext.onReady(function() {
 			success : function(response, options) {
 				var text = unicodeToString(response.responseText);
 				var responseArray = Ext.JSON.decode(text);
-				if (responseArray.status) {
+				if (responseArray.storeId) {
 					Ext.getCmp("tbinfo-store-id")
 							.setValue(responseArray.storeId);
 					Ext.getCmp("tbinfo-status").setValue(responseArray.status);
@@ -350,8 +350,13 @@ Ext.onReady(function() {
 							.setValue(responseArray.sessionKey);
 					Ext.getCmp("tbinfo-session-url")
 							.setValue(responseArray.sessionUrl);
+					if(responseArray.storeNick)
 					Ext.getCmp("tbinfo-store-nick")
 							.setValue(responseArray.storeNick);
+					else
+					Ext.getCmp("tbinfo-store-nick")
+							.setValue(row.get('StoreName'));
+					
 					Ext.getCmp("tbinfo-zip").setValue(responseArray.zip);
 				} else {
 				}
@@ -559,7 +564,7 @@ Ext.onReady(function() {
 						}, {
 							xtype : 'textfield',
 							fieldLabel : '店铺编号',
-							ignoreNoChange : true,
+							readOnly : true,
 							name : 'storeId',
 							id : 'tbinfo-store-id'
 						}, {

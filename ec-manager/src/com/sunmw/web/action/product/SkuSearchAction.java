@@ -148,8 +148,8 @@ public class SkuSearchAction {
 		this.message = message;
 	}
 
-	//订单查询
-	public String orderSearch()
+	//sku查询
+	public String skuSearch()
 	{
 		Map param = new HashMap();
 		param.put("ItemCd", itemCd);

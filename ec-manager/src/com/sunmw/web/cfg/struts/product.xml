@@ -40,27 +40,25 @@
 		<action name="viewSkuAction" class="skuSearchAction"
 			method="viewSkuSearch">
 			<result name="success" type="dispatcher">
-				<param name="location">application/product/skuSearch.jsp</param>
+				<param name="location">application/item/skuSearch.jsp</param>
 			</result>
 			<interceptor-ref name="AuthorityStack"></interceptor-ref>
 		</action>
 		<!-- SKU查询 -->
 		<action name="skuSearchAction" class="skuSearchAction"
-			method="orderSearch">
-			<result name="success" type="dispatcher">
-				<param name="location">application/product/skuResult.jsp</param>
-			</result>
+			method="skuSearch">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
 			<interceptor-ref name="AuthorityStack"></interceptor-ref>
 		</action>
 		<!-- SKU导出 -->
 		<action name="skuExportAction" class="skuSearchAction"
 			method="exportSku">
-			<result name="success" type="dispatcher">
-				<param name="location">application/common/export.jsp</param>
-			</result>
-			<result name="error" type="dispatcher">
-				<param name="location">application/common/export.jsp</param>
-			</result>
+			
+			<result type="json">
+		      <param name="includeProperties">exportUrl</param>  
+		    </result>
 			<interceptor-ref name="AuthorityStack"></interceptor-ref>
 		</action>
 		<!-- 商品编码生成查询界面 -->
