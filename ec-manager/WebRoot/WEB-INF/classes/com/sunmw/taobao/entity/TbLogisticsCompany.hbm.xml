@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbLogisticsCompany"
+		table="tb_logistics_company"
+	>
+		<meta attribute="sync-DAO">false</meta>
+
+		<meta attribute="sync-DAO">false</meta>
+
+		<id
+			name="Id"
+			type="string"
+			column="id"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="Code"
+			column="code"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Name"
+			column="name"
+			type="string"
+			not-null="false"
+			length="40"
+		/>
+		<property
+			name="WhLogisticsName"
+			column="wh_logistics_name"
+			type="string"
+			not-null="false"
+			length="40"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

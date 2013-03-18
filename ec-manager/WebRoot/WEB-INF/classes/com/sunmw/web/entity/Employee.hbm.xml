@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="Employee"
+		table="employee"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="string"
+			column="employee_id"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="Name"
+			column="name"
+			type="string"
+			not-null="false"
+			length="45"
+		/>
+		<property
+			name="Discount"
+			column="discount"
+			type="java.lang.Double"
+			not-null="false"
+			length="22"
+		/>
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Cuser"
+			column="cuser"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="Muser"
+			column="muser"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="LastUpdatedStamp"
+			column="LAST_UPDATED_STAMP"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="LastUpdatedUser"
+			column="LAST_UPDATED_USER"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="CreatedStamp"
+			column="CREATED_STAMP"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="CreatedUser"
+			column="CREATED_USER"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

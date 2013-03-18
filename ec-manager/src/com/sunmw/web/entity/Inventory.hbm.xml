@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="Inventory"
+		table="inventory"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="inv_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="InvType"
+			column="inv_type"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="SkuCd"
+			column="sku_cd"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="Quantity"
+			column="quantity"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="AvailableQuantity"
+			column="available_quantity"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="InvStatus"
+			column="inv_status"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="WhId"
+			column="wh_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Version"
+			column="version"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="LocalQty"
+			column="local_qty"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="UpdateTime"
+			column="update_time"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="UpdateFlag"
+			column="update_flag"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

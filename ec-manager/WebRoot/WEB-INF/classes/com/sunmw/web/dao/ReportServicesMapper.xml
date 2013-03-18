@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunmw.web.dao.ReportServicesMapper" >
+  <resultMap id="SaleOrderResultMap" type="java.util.Map" >
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+    <result column="orig_order_no" property="origOrderNo" jdbcType="VARCHAR" />
+    <result column="orig_order_type" property="origOrderType" jdbcType="VARCHAR" />
+    <result column="ref_order_id" property="refOrderId" jdbcType="INTEGER" />
+    <result column="ref_order_type" property="refOrderType" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="orig_order_status" property="origOrderStatus" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+    <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
+    <result column="request_date" property="requestDate" jdbcType="TIMESTAMP" />
+    <result column="delivery_date" property="deliveryDate" jdbcType="TIMESTAMP" />
+    <result column="complete_date" property="completeDate" jdbcType="TIMESTAMP" />
+    <result column="invoice_id" property="invoiceId" jdbcType="INTEGER" />
+    <result column="order_amt" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="receive_field1" property="receiveField1" jdbcType="VARCHAR" />
+    <result column="receive_field2" property="receiveField2" jdbcType="VARCHAR" />
+    <result column="receive_field3" property="receiveField3" jdbcType="VARCHAR" />
+    <result column="receive_field4" property="receiveField4" jdbcType="VARCHAR" />
+    <result column="receive_field5" property="receiveField5" jdbcType="VARCHAR" />
+    <result column="receive_field6" property="receiveField6" jdbcType="VARCHAR" />
+    <result column="ref_order_no" property="refOrderNo" jdbcType="VARCHAR" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="inv_status" property="invStatus" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="INTEGER" />
+    <result column="payment" property="payment" jdbcType="DECIMAL" />
+    <result column="total_fee" property="totalFee" jdbcType="DECIMAL" />
+    <result column="post_fee" property="postFee" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="DECIMAL" />
+    <result column="payment_point" property="paymentPoint" jdbcType="INTEGER" />
+    <result column="buyer_nick" property="buyerNick" jdbcType="VARCHAR" />
+    <result column="buyer_email" property="buyerEmail" jdbcType="VARCHAR" />
+    <result column="post_method" property="postMethod" jdbcType="VARCHAR" />
+    <result column="post_company" property="postCompany" jdbcType="VARCHAR" />
+    <result column="post_no" property="postNo" jdbcType="VARCHAR" />
+    <result column="receiver_state" property="receiverState" jdbcType="VARCHAR" />
+    <result column="receiver_city" property="receiverCity" jdbcType="VARCHAR" />
+    <result column="receiver_district" property="receiverDistrict" jdbcType="VARCHAR" />
+    <result column="receiver_address" property="receiverAddress" jdbcType="VARCHAR" />
+    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="receiver_mobile" property="receiverMobile" jdbcType="VARCHAR" />
+    <result column="receiver_tel" property="receiverTel" jdbcType="VARCHAR" />
+    <result column="seller_nick" property="sellerNick" jdbcType="VARCHAR" />
+    <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
+    <result column="invoice_title" property="invoiceTitle" jdbcType="VARCHAR" />
+    <result column="invoice_content" property="invoiceContent" jdbcType="VARCHAR" />
+    <result column="receiver_zip" property="receiverZip" jdbcType="VARCHAR" />
+    <result column="post_nos" property="postNos" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_no" property="payNo" jdbcType="VARCHAR" />
+    <result column="sku_cd" property="skuCd" jdbcType="VARCHAR" />
+    <result column="item_cd" property="itemCd" jdbcType="VARCHAR" />
+    <result column="sku_prop1" property="skuProp1" jdbcType="VARCHAR" />
+    <result column="sku_prop2" property="skuProp2" jdbcType="VARCHAR" />
+    <result column="req_qty" property="reqQty" jdbcType="DECIMAL" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="sub_total" property="subTotal" jdbcType="DECIMAL" />
+    <result column="red_order_item_id" property="redOrderItemId" jdbcType="INTEGER" />
+    <result column="orig_order_item_no" property="origOrderItemNo" jdbcType="VARCHAR" />
+    <result column="orig_sku_id" property="origSkuId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="ref_qty" property="refQty" jdbcType="INTEGER" />
+    <result column="discount_price" property="discountPrice" jdbcType="DECIMAL" />
+    <result column="real_price" property="realPrice" jdbcType="DECIMAL" />
+    <result column="discount_price_amt" property="discountPriceAmt" jdbcType="DECIMAL" />
+    <result column="real_price_amt" property="realPriceAmt" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="SaleOrder_Column_List" >
+    oh.order_no,oh.order_type,oh.orig_order_no,oh.orig_order_type,oh.ref_order_id,oh.ref_order_type,
+	oh.store_id,oh.orig_order_status,oh.order_status,oh.order_date,oh.request_date,oh.delivery_date,oh.complete_date,
+	oh.invoice_id,oh.order_amt,oh.receive_field1,oh.receive_field2,oh.receive_field3,oh.receive_field4,oh.receive_field5,
+	oh.receive_field6,oh.ref_order_no,oh.origin,oh.inv_status,oh.company_id,oh.payment,
+	oh.total_fee,oh.post_fee,oh.discount,oh.payment_point,oh.buyer_nick,oh.buyer_email,oh.post_method,
+	oh.post_company,oh.post_no,oh.receiver_state,oh.receiver_city,oh.receiver_district,oh.receiver_address,
+	oh.receiver_name,oh.receiver_mobile,oh.receiver_tel,oh.seller_nick,oh.invoice_type,oh.invoice_title,
+	oh.invoice_content,oh.receiver_zip,oh.post_nos,oh.pay_time,oh.pay_no,
+	oi.sku_cd,oi.item_cd,oi.sku_prop1,oi.sku_prop2,oi.req_qty,oi.qty,oi.price,
+	oi.sub_total,oi.red_order_item_id,oi.orig_order_item_no,oi.orig_sku_id,oi.name,oi.ref_qty,oi.discount_price,
+	oi.real_price,oi.discount_price_amt,oi.real_price_amt 
+	
+  </sql>
+  <select id="selectSaleOrderByExample" resultMap="SaleOrderResultMap" parameterType="java.util.Map" >
+    
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="SaleOrder_Column_List" />
+    from order_head oh inner join order_item oi on oh.order_head_id = oi.order_head_id 
+    where oh.order_type = 'ORDER'
+    and oh.store_id = ${StoreId} and oh.pay_time>='${StartDate}' and oh.pay_time &lt; '${EndDate}'    
+    order by oh.pay_time
+  </select>
+  <resultMap id="RefundOrderResultMap" type="java.util.Map" >
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+    <result column="orig_order_no" property="origOrderNo" jdbcType="VARCHAR" />
+    <result column="orig_order_type" property="origOrderType" jdbcType="VARCHAR" />
+    <result column="post_no" property="postNo" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="orig_order_status" property="origOrderStatus" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+    <result column="ref_order_no" property="refOrderNo" jdbcType="VARCHAR" />
+    <result column="buyer_nick" property="buyerNick" jdbcType="VARCHAR" />
+    <result column="refund_amt" property="refundAmt" jdbcType="DECIMAL" />
+    <result column="order_amt" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="request_date" property="requestDate" jdbcType="TIMESTAMP" />
+    <result column="complete_date" property="completeDate" jdbcType="TIMESTAMP" />
+    <result column="sku_cd" property="skuCd" jdbcType="VARCHAR" />
+    <result column="item_cd" property="itemCd" jdbcType="VARCHAR" />
+    <result column="sku_prop1" property="skuProp1" jdbcType="VARCHAR" />
+    <result column="sku_prop2" property="skuProp2" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="sub_total" property="subTotal" jdbcType="DECIMAL" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="RefundOrder_Column_List" >
+    oh.order_no,oh.order_type,oh.orig_order_no,oh.orig_order_type,ro.post_no,oh.store_id,oh.orig_order_status,oh.order_status,
+    oh.ref_order_no,ro.buyer_nick,oh.order_amt refund_amt,oh.receiver_name,oh.total_fee order_amt,
+	oh.complete_date,oh.request_date,oi.item_cd,oi.sku_cd,oi.sku_prop1,oi.sku_prop2,oi.price,oi.qty,oi.sub_total,oi.name
+  </sql>
+  <select id="selectRefundOrderByExample" resultMap="RefundOrderResultMap" parameterType="java.util.Map" >    
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="RefundOrder_Column_List" />
+    from order_head oh inner join order_item oi on oh.order_head_id = oi.order_head_id 
+	left join (select * from order_head where store_id = ${StoreId} and order_type='ORDER') ro on oh.ref_order_no = ro.orig_order_no
+    where oh.order_type = 'REFUND' and oh.order_status = 'REFUND_COMPLETE'
+    and oh.store_id = ${StoreId} and oh.complete_date>='${StartDate}' and oh.complete_date &lt; '${EndDate}'    
+    order by oh.complete_date
+  </select>
+  <resultMap id="DailySaleAndRefundReportResultMap" type="java.util.Map" >
+    <result column="orig_order_no" property="origOrderNo" jdbcType="VARCHAR" />
+    <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
+    <result column="sku_cd" property="skuCd" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="amt" property="amt" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="selectDailySaleAndRefundReportByExample" resultMap="DailySaleAndRefundReportResultMap" parameterType="java.util.Map" >    
+    select oh.pay_time order_date,oh.orig_order_no,oi.sku_cd,oi.qty,oi.sub_total amt 
+    from order_head oh inner join order_item oi on oh.order_head_id = oi.order_head_id
+	where oh.store_id = ${StoreId} and oh.order_type = 'ORDER' and oh.pay_time >= '${StartDate}' and oh.pay_time &lt; '${EndDate}' 
+	union
+	select oh.complete_date order_date,oh.orig_order_no,oi.sku_cd,oi.qty*-1 qty,oh.order_amt*-1 amt 
+	from order_head oh inner join order_item oi on oh.order_head_id = oi.order_head_id
+	where oh.store_id = ${StoreId} and oh.order_type = 'REFUND' and oh.complete_date >= '${StartDate}' and oh.complete_date &lt; '${EndDate}' 
+  </select>
+</mapper>

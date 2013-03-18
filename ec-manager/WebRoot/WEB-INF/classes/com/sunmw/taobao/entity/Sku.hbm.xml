@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="Sku"
+		table="Sku"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="java.lang.Integer"
+			column="Sku_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="TbSkuId"
+			column="Tb_sku_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="19"
+		/>
+		<property
+			name="ItemId"
+			column="Item_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="19"
+		/>
+		<property
+			name="Properties"
+			column="properties"
+			type="string"
+			not-null="false"
+			length="256"
+		/>		
+		<property
+			name="SizeName"
+			column="size_name"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		<property
+			name="ColorName"
+			column="color_name"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		<property
+			name="Quantity"
+			column="quantity"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Price"
+			column="price"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="OuterId"
+			column="outer_id"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		<property
+			name="UpdateTime"
+			column="Update_time"
+			type="timestamp"
+			not-null="false"
+			length="23"
+		/>
+		<property
+			name="CreateTime"
+			column="Create_time"
+			type="timestamp"
+			not-null="false"
+			length="23"
+		/>
+		<property
+			name="PublishTime"
+			column="Publish_time"
+			type="timestamp"
+			not-null="false"
+			length="23"
+		/>
+		<property
+			name="InvUpdateTime"
+			column="Inv_Update_Time"
+			type="timestamp"
+			not-null="false"
+			length="23"
+		/>
+		<property
+			name="PriceUpdateTime"
+			column="Price_Update_Time"
+			type="timestamp"
+			not-null="false"
+			length="23"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

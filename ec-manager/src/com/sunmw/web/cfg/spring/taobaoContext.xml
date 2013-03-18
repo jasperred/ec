@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	
+	<bean id="dataSourceTb" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.url}taobao?autoReconnect=true&amp;character-set=utf-8"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="idleConnectionTestPeriod" value="30"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="user"  value= "${jdbc.username}"  />         
+    	<property name="password"  value= "${jdbc.password}"  /> 
+	</bean>
+	<bean id="sessionFactoryTb"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSourceTb" />
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>
+				classpath:com/sunmw/taobao/entity/
+				</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.connection.pool_size">10</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 淘宝店铺类目 -->
+	<bean id="tbShopServices" class="com.sunmw.taobao.bean.shop.impl.TaobaoShopServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	
+	<bean id="tbOrderScheduledThreadPoolExecutor" class="java.util.concurrent.ScheduledThreadPoolExecutor">
+		<constructor-arg>
+		<value>10</value>
+		</constructor-arg>
+	</bean>
+	<!-- 淘宝订单下载 -->
+	<bean id="tbOrderServices" class="com.sunmw.taobao.bean.order.impl.TBOrderServicesByThreadImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+		<property name="tbOrderScheduledThreadPoolExecutor">
+			<ref local="tbOrderScheduledThreadPoolExecutor" />
+		</property>
+	</bean>
+	<!-- 淘宝数据处理 -->
+	<bean id="tbOrderDataServices" class="com.sunmw.taobao.bean.order.impl.TBOrderDataServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	<!-- 淘宝基础信息下载 -->
+	<bean id="tbBaseServices" class="com.sunmw.taobao.bean.base.impl.TbBaseServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	<!-- 淘宝退货下载 -->
+	<bean id="tbRefundServices" class="com.sunmw.taobao.bean.refunds.impl.TbRefundsServicesByFastImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	<!-- 淘宝产品下载 -->
+	<bean id="tbProductServices" class="com.sunmw.taobao.bean.product.impl.TbProductServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	<!-- 淘宝商品下载 -->
+	<bean id="tbItemServices" class="com.sunmw.taobao.bean.product.impl.TbItemServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	<!-- 淘宝库存更新 -->
+	<bean id="tbInventoryServices" class="com.sunmw.taobao.bean.inventory.impl.TBInventoryServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	<!-- 淘宝分销订单下载 -->
+	<bean id="tbDistributionServices" class="com.sunmw.taobao.bean.distribution.impl.TbDistributionServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	<!-- 淘宝任务类 -->
+	<bean id="tbTaskServices" class="com.sunmw.taobao.bean.task.impl.TaobaoTaskServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	<!-- 淘宝任务类 -->
+	<bean id="taobaoInterfaceServices" class="com.sunmw.web.bean.dataInterface.impl.TaobaoInterfaceServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	<!-- 淘宝主动通知业务 -->
+	<bean id="tbNotifyServices" class="com.sunmw.taobao.bean.notify.impl.TbNotifyServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+	<!-- 淘宝监听主动通知业务 init-method="startNotifyService" -->
+	<bean id="taobaoNotifyService" class="com.sunmw.taobao.bean.notify.TaobaoNotifyService" init-method="startNotifyService" >
+		<property name="sessionFactory">
+			<ref local="sessionFactoryTb" />
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="financial" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>
+		<!-- 财务报表上传页面 -->
+		<action name="viewAlipayFinancialCsvListAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/financial/financialImport.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 财务报表导入 -->
+		<action name="importAlipayFinancialReportCsv" class="importAlipayFinancialReportCsvAction"
+			method="importAlipayFinancialReportCsv">
+			<result type="json">
+		      <param name="includeProperties">success,message</param> 
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 财务报表查询页面 -->
+		<action name="viewFinancialSearchAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/financial/financialSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 财务报表查询 -->
+		<action name="searchFinancial" class="searchTaobaoAccountHead"
+			method="taobaoAccountHeadSearch">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 生成财务报表 -->
+		<action name="genericTaobaoAccountReport" class="taobaoAccountReport"
+			method="genericTaobaoAccountReport">
+			<result type="json">
+		      <param name="includeProperties">success,message</param> 
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 导出财务报表 -->
+		<action name="exportTaobaoAccountReport" class="exportTaobaoAccountReport"
+			method="exportFinancialReport">
+			<result type="json">
+		      <param name="includeProperties">exportUrl,message</param> 
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 报表信息 -->
+		<action name="taobaoAccountHeadInfo" class="taobaoAccountHeadInfo"
+			method="taobaoAccountHeadInfo">
+			<result type="json">
+		      <param name="includeProperties">success,message,taobaoAccountInfo\.*.*</param> 
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 报表相关订单 -->
+		<action name="taobaoAccountOrderDetail" class="taobaoAccountHeadInfo"
+			method="saleOrderList">
+			<result type="json">
+		      <param name="includeProperties">success,message,orderDetailList\[\d+\]\.*.*</param> 
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 报表相关退货 -->
+		<action name="taobaoAccountRefundDetail" class="taobaoAccountHeadInfo"
+			method="refundOrderList">
+			<result type="json">
+		      <param name="includeProperties">success,message,refundList\[\d+\]\.*.*</param> 
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 报表相关支付宝信息 -->
+		<action name="taobaoAccountAlipayDetail" class="taobaoAccountHeadInfo"
+			method="alipayDetailList">
+			<result type="json">
+		      <param name="includeProperties">success,message,alipayDetailList\[\d+\]\.*.*</param> 
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

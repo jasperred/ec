@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="Warehouse"
+		table="warehouse"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="wh_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="WhName"
+			column="wh_name"
+			type="string"
+			not-null="false"
+			length="256"
+		/>
+		<property
+			name="WhType"
+			column="wh_type"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="Status"
+			column="status"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="ReserveInv"
+			column="reserve_inv"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="WhCode"
+			column="wh_code"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="ValidTime"
+			column="valid_time"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="CompanyId"
+			column="company_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

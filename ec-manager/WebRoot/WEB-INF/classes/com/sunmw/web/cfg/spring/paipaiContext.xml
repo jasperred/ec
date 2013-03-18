@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	
+	<bean id="dataSourcePaipai" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.url}paipai?autoReconnect=true&amp;character-set=utf-8"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="idleConnectionTestPeriod" value="30"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="user"  value= "${jdbc.username}"  />         
+    	<property name="password"  value= "${jdbc.password}"  /> 
+	</bean>
+	<bean id="sessionFactoryPaipai"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSourcePaipai" />
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>
+				classpath:com/sunmw/paipai/entity/
+				</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.connection.pool_size">10</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- PP接口调用 -->
+	<bean id="paipaiApiForJson" class="com.sunmw.paipai.bean.PaipaiApiForJson">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryPaipai" />
+		</property>
+	</bean>
+	<!-- PP订单接口 -->
+	<bean id="paipaiOrderServices" class="com.sunmw.paipai.bean.order.impl.PaipaiOrderServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryPaipai" />
+		</property>
+	</bean>
+	<!-- PP退货接口 -->
+	<bean id="paipaiRefundServices" class="com.sunmw.paipai.bean.refunds.impl.PaipaiRefundServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryPaipai" />
+		</property>
+	</bean>
+	<!-- PP任务类 -->
+	<bean id="paipaiInterfaceServices" class="com.sunmw.web.bean.dataInterface.impl.PaipaiInterfaceServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryPaipai" />
+		</property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="common" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>	
+		<!-- 全部店铺列表 -->
+		<action name="storeListAction" class="storeAction"
+			method="storeList">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 公司店铺列表 -->
+		<action name="companyStoreList" class="storeAction"
+			method="storeListByCompany">
+			<result type="json">
+		      <param name="root">storeList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 订单状态列表 -->
+		<action name="erpStatusList" class="statusAction"
+			method="statusListByType">
+			<param name="statusType">ORDER</param>
+			<result type="json">
+		      <param name="root">statusList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 淘宝状态列表 -->
+		<action name="tbStatusList" class="statusAction"
+			method="statusListByType">
+			<param name="statusType">TAOBAO_ORDER</param>
+			<result type="json">
+		      <param name="root">statusList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退货状态列表 -->
+		<action name="returnStatusList" class="statusAction"
+			method="statusListByType">
+			<param name="statusType">REFUND</param>
+			<result type="json">
+		      <param name="root">statusList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品状态列表 -->
+		<action name="goodStatusList" class="statusAction"
+			method="statusListByType">
+			<param name="statusType">TAOBAO_GOOD</param>
+			<result type="json">
+		      <param name="root">statusList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 保留原因列表 -->
+		<action name="receiveStatusList" class="statusAction"
+			method="statusListByType">
+			<param name="statusType">TAOBAO_RECEIVE</param>
+			<result type="json">
+		      <param name="root">statusList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 淘宝退货状态列表 -->
+		<action name="tbReturnStatusList" class="statusAction"
+			method="statusListByType">
+			<param name="statusType">TAOBAO_RETURN</param>
+			<result type="json">
+		      <param name="root">statusList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 淘宝货物状态列表 -->
+		<action name="tbGoodStatusList" class="statusAction"
+			method="statusListByType">
+			<param name="statusType">TAOBAO_GOOD</param>
+			<result type="json">
+		      <param name="root">statusList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退货保留原因列表 -->
+		<action name="refundReceiveStatusList" class="statusAction"
+			method="statusListByType">
+			<param name="statusType">TB_RETURN_RECEIVE</param>
+			<result type="json">
+		      <param name="root">statusList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 接口类型 -->
+		<action name="ifDefineTypeList" class="statusAction"
+			method="statusListByType">
+			<param name="statusType">IF_DEFINE_TYPE</param>
+			<result type="json">
+		      <param name="root">statusList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

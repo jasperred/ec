@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="OrderNote"
+		table="order_note"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<composite-id name="Id" class="OrderNotePK">
+			<key-property
+				name="NoteType"
+				column="note_type"
+				type="string"
+			/>
+			<key-property
+				name="OrderHeadId"
+				column="order_head_id"
+				type="integer"
+			/>
+		</composite-id>
+
+		<property
+			name="Note"
+			column="note"
+			type="string"
+			not-null="false"
+		/>
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

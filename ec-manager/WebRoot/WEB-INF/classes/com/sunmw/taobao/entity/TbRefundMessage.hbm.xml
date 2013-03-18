@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbRefundMessage"
+		table="tb_refund_message"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="OrigId"
+			column="id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="RefundId"
+			column="refund_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="OwnerId"
+			column="owner_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="OwnerNick"
+			column="owner_nick"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="OwnerRole"
+			column="owner_role"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="Content"
+			column="content"
+			type="string"
+			not-null="false"
+			length="512"
+		/>
+		<property
+			name="Created"
+			column="created"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="MessageType"
+			column="message_type"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="UpdateTime"
+			column="update_time"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="UpdateFlag"
+			column="update_flag"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="StoreId"
+			column="store_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

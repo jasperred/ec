@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="TbArea"
+		table="tb_area"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="tb_area_id"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="Type"
+			column="type"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Name"
+			column="name"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		<property
+			name="ParentId"
+			column="parent_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Zip"
+			column="zip"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

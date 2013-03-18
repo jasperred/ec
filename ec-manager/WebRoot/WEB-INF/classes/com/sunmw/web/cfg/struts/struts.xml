@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<include file="struts-default.xml" />
+	<constant name="struts.i18n.reload" value="true" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.custom.i18n.resources" value="com.sunmw.web.cfg.i18n.messageResource" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.configuration.xml.reload" value="true"/>
+	<constant name="struts.ui.theme" value="simple"/>
+	<constant name="struts.locale" value="zh_CN"/>
+	<constant name="struts.serve.static.browserCache" value="false"/>
+	<constant name="struts.url.includeParams" value="none"/>
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.multipart.maxSize" value="20971520"/>
+	<constant name="struts.multipart.saveDir" value="/usr/local/tmp/"/>	
+
+	<package name="default" extends="struts-default">
+		
+		<action name="demo1" class="com.sunmw.web.demo.demo"
+			method="demo1">
+			<result name="success" type="dispatcher">
+				<param name="location">/demo/feed-viewer/feed-viewer.jsp</param>
+			</result>
+		</action>
+		<action name="layoutdemo1" class="com.sunmw.web.demo.demo"
+			method="demo1">
+			<result name="success" type="dispatcher">
+				<param name="location">/demo/layout-demo/layout-demo.jsp</param>
+			</result>
+		</action>
+		<action name="tabsdemo1" class="com.sunmw.web.demo.demo"
+			method="demo1">
+			<result name="success" type="dispatcher">
+				<param name="location">/demo/tabs/tab-scroller-menu.html</param>
+			</result>
+		</action>
+	</package>  
+	<include file="com/sunmw/web/cfg/struts/common.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/framework.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/product.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/order.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/refund.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/task.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/report.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/fileupload.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/financial.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/warehouse.xml"></include>
+</struts>

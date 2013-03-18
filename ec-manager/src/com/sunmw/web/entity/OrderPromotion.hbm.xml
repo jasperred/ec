@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="OrderPromotion"
+		table="order_promotion"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="id"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="Type"
+			column="type"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="OrigId"
+			column="orig_id"
+			type="string"
+			not-null="false"
+			length="40"
+		/>
+		<property
+			name="PromotionName"
+			column="promotion_name"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="DiscountFee"
+			column="discount_fee"
+			type="big_decimal"
+			not-null="false"
+			length="28"
+		/>
+		<property
+			name="GiftItemName"
+			column="gift_item_name"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

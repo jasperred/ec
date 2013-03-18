@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="UserLoginSession"
+		table="user_login_session"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="string"
+			column="USER_LOGIN_ID"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="SavedDate"
+			column="SAVED_DATE"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="SessionData"
+			column="SESSION_DATA"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="LastUpdatedStamp"
+			column="LAST_UPDATED_STAMP"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="LastUpdatedUser"
+			column="LAST_UPDATED_USER"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="CreatedStamp"
+			column="CREATED_STAMP"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="CreatedUser"
+			column="CREATED_USER"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

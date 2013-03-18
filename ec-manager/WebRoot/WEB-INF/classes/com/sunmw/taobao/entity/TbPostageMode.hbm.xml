@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbPostageMode"
+		table="tb_postage_mode"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="PostageId"
+			column="postage_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="PostId"
+			column="post_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Type"
+			column="type"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Dests"
+			column="dests"
+			type="string"
+			not-null="false"
+			length="128"
+		/>
+		<property
+			name="Price"
+			column="price"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="Increase"
+			column="increase"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

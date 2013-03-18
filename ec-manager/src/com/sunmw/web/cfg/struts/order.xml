@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="order" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>	
+		<!-- 订单新增界面 -->
+		<action name="viewOrderNew" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/order/orderNew.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 订单新增 -->
+		<action name="newOrder" class="newOrderAction"
+			method="newOrder">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 订单查询界面 -->
+		<action name="viewOrder" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/order/orderSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 订单查询 -->
+		<action name="searchOrder" class="orderSearchAction"
+			method="orderSearch">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 订单批量审核-->
+		<action name="ordersAuditedAction" class="orderAuditedAndReceiveAction"
+			method="auditedOrders">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 订单批量预留 -->
+		<action name="ordersReceiveAction" class="orderAuditedAndReceiveAction"
+			method="receiveOrders">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 订单信息 -->
+		<action name="orderInfoAction" class="orderInfoAction"
+			method="orderInfo">
+			<result type="json">
+		      <param name="root">orderInfo</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 保存客服留言 -->
+		<action name="custNoteSaveAction" class="orderInfoAction"
+			method="custNoteSave">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 修改收货地址 -->
+		<action name="updateReceiverInfoAction" class="orderInfoAction"
+			method="updateReceiverInfo">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 保存发票信息 -->
+		<action name="saveInvoiceAction" class="orderInfoAction"
+			method="saveInvoice">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 取消订单 -->
+		<action name="cancelOrderAction" class="orderInfoAction"
+			method="cancelOrder">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 恢复订单 -->
+		<action name="recoverOrderAction" class="orderInfoAction"
+			method="recoverOrder">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 导出订单 -->
+		<action name="exportOrder" class="orderSearchAction"
+			method="exportOrder">
+			<result type="json">
+		      <param name="includeProperties">exportUrl</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 订单明细查询界面 -->
+		<action name="viewOrderItemAction" class="orderItemSearchAction"
+			method="viewOrderItemSearch">
+			<result name="success" type="dispatcher">
+				<param name="location">application/order/orderItemSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 订单明细查询 -->
+		<action name="orderItemSearchAction" class="orderItemSearchAction"
+			method="orderItemSearch">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="orderExportAction" class="orderSearchAction"
+			method="exportOrder">
+			<result name="success" type="dispatcher">
+				<param name="location">application/common/export.jsp</param>
+			</result>
+			<result name="error" type="dispatcher">
+				<param name="location">application/common/export.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="orderItemExportAction" class="orderItemSearchAction"
+			method="exportOrderItem">
+			<result name="success" type="dispatcher">
+				<param name="location">application/common/export.jsp</param>
+			</result>
+			<result name="error" type="dispatcher">
+				<param name="location">application/common/export.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="orderSearchJsonAction" class="orderSearchAction"
+			method="orderSearch">
+			<result type="json">  
+			    <param name="includeProperties">resultList.*,currentPage,rowCount,pageRow,pageCount</param>  
+			</result> 
+			<param name="noCache">true</param>  
+        	<param name="ignoreHierarchy">false</param> 
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 地址查询 -->
+		<action name="addressSearchJsonAction" class="addressSearchAction"
+			method="searchAddress">
+			<result type="json">  
+			    <param name="includeProperties">addressList.*</param>  
+			</result> 
+			<param name="noCache">true</param>  
+        	<param name="ignoreHierarchy">false</param> 
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		
+		<!-- 客户查询界面 -->
+		<action name="viewCustomer" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/customer/customerSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 客户查询 -->
+		<action name="customerSearch" class="customerSearchAction"
+			method="searchCustomer">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<param name="noCache">true</param>  
+        	<param name="ignoreHierarchy">false</param> 
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		
+		<!-- 客户信息 -->
+		<action name="customerInfo" class="customerInfoAction"
+			method="companyInfo">
+			<result type="json">
+		      <param name="includeProperties">customerInfo\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 客户新增 -->
+		<action name="newCustomer" class="customerInfoAction"
+			method="newCustomer">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 客户修改 -->
+		<action name="updateCustomer" class="customerInfoAction"
+			method="updateCustomer">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 客户删除 -->
+		<action name="deleteCustomer" class="customerInfoAction"
+			method="deleteCustomer">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

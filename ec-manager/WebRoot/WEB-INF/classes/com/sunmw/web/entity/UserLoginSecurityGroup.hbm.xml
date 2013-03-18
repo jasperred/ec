@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="UserLoginSecurityGroup"
+		table="user_login_security_group"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<composite-id name="Id" class="UserLoginSecurityGroupPK">
+			<key-property
+				name="GroupId"
+				column="GROUP_ID"
+				type="string"
+			/>
+			<key-property
+				name="UserId"
+				column="USER_ID"
+				type="integer"
+			/>
+			<key-property
+				name="FromDate"
+				column="FROM_DATE"
+				type="timestamp"
+			/>
+		</composite-id>
+
+		<property
+			name="ThruDate"
+			column="THRU_DATE"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Cuser"
+			column="cuser"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Muser"
+			column="muser"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

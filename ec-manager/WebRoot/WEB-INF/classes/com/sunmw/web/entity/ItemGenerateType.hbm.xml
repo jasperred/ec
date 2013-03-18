@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="ItemGenerateType"
+		table="item_generate_type"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="Type"
+			column="type"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="PropName"
+			column="prop_name"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="PropValue"
+			column="prop_value"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="ParentPropName"
+			column="parent_prop_name"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

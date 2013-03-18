@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbCatAuth"
+		table="TbCatAuth"
+	>
+		<meta attribute="sync-DAO">false</meta>
+
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="CompanyId"
+			column="company_id"
+			type="java.lang.Integer"
+			not-null="false"
+			length="19"
+		/>
+		<property
+			name="StoreId"
+			column="store_id"
+			type="java.lang.Integer"
+			not-null="false"
+			length="19"
+		/>
+		<property
+			name="Cid"
+			column="cid"
+			type="java.lang.Long"
+			not-null="true"
+			length="19"
+		/>
+		<property
+			name="AuthType"
+			column="auth_type"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="ParentId"
+			column="parent_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="19"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbProductPropImg"
+		table="tb_product_prop_img"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="TbProductPropImgId"
+			column="tb_product_prop_img_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="TbProductId"
+			column="tb_product_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Props"
+			column="props"
+			type="string"
+			not-null="false"
+			length="512"
+		/>
+		<property
+			name="Url"
+			column="url"
+			type="string"
+			not-null="false"
+			length="128"
+		/>
+		<property
+			name="Position"
+			column="position"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Created"
+			column="created"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Modified"
+			column="modified"
+			type="timestamp"
+			not-null="false"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

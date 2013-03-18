@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbPostage"
+		table="tb_postage"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="PostageId"
+			column="postage_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Name"
+			column="name"
+			type="string"
+			not-null="false"
+			length="256"
+		/>
+		<property
+			name="Memo"
+			column="memo"
+			type="string"
+			not-null="false"
+			length="256"
+		/>
+		<property
+			name="Created"
+			column="created"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Modified"
+			column="modified"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="PostPrice"
+			column="post_price"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="PostIncrease"
+			column="post_increase"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="ExpressPrice"
+			column="express_price"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="ExpressIncrease"
+			column="express_increase"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="EmsPrice"
+			column="ems_price"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="EmsIncrease"
+			column="ems_increase"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

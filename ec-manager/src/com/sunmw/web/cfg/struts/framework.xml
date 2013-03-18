@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="framework" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>		
+	 	<!-- 主界面 -->
+		<action name="main" class="com.sunmw.web.demo.demo" method="demo1">
+			<result name="success" type="dispatcher">
+				<param name="location">/framework/main.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	 	<!-- 用户菜单列表 -->		
+		<action name="menu" class="menuAction" method="userMenu">
+			<result type="json">
+		      <param name="root">userMenuMap</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>			
+	 	<!-- 首页 -->		
+		<action name="index" class="loginAction" method="index">
+			<result name="success" type="redirect">
+				<param name="location">main</param>
+			</result>
+			<result name="login" type="redirect">
+				<param name="location">login</param>
+			</result>
+		</action>		
+	 	<!-- 登录界面 -->
+		<action name="login" class="loginAction" method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">/framework/login.jsp</param>
+			</result>
+			<result name="login" type="dispatcher">
+				<param name="location">/framework/login.jsp</param>
+			</result>
+		</action>		
+	 	<!-- 处理登录 -->
+		<action name="processLogin" class="loginAction" method="login">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+		</action>
+	 	<!-- 退出 -->
+		<action name="logout" class="loginAction" method="logout">
+			<result name="success" type="redirect">
+				<param name="location">login</param>
+			</result>
+		</action>	
+		<!-- 登录验证图片 -->
+		<action name="rand" class="com.sunmw.web.action.login.RandomAction">   
+	      <result type="stream">   
+	           <param name="contentType">image/jpeg</param>   
+	           <param name="inputName">inputStream</param>   
+	      </result>
+	 	</action>		 	
+		<!-- 产生验证码 -->
+		<action name="verifyRequestAction" class="verifyRequestAction"
+			method="genericVerify">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	 	<!-- 菜单界面 -->
+		<action name="viewModule" class="moduleAction" method="viewModule">   
+	      <result name="success" type="dispatcher">
+				<param name="location">/framework/user/module.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 菜单列表 -->
+	 	<action name="moduleList" class="moduleAction" method="menuList">   
+	      	<result type="json">
+		      <param name="root">moduleMap</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 新增和修改菜单 -->
+	 	<action name="saveModule" class="moduleAction" method="saveModule">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 删除菜单 -->
+	 	<action name="deleteModule" class="moduleAction" method="deleteModule">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 用户界面 -->
+	 	<action name="viewUser" class="loginAction" method="noAction">   
+	      	<result name="success" type="dispatcher">
+				<param name="location">/framework/user/userSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 用户查询 -->
+	 	<action name="searchUser" class="userSearchAction" method="searchUser">   
+	      	<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 用户保存 -->
+	 	<action name="saveUser" class="userInfoAction" method="updateUserInfo">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 新增用户 -->
+	 	<action name="newUser" class="userInfoAction" method="newUser">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 用户信息 -->
+	 	<action name="userInfo" class="userInfoAction" method="getUserInfo">   
+	      	<result type="json">
+		      <param name="includeProperties">email,userName,enabled,companyId,companyNo,companyName,companyStatus,userNo,tecNo,userId,userType</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 登录用户信息 -->
+	 	<action name="userLoginInfo" class="userInfoAction" method="getUserLoginInfo">   
+	      	<result type="json">
+		      <param name="includeProperties">email,userName,enabled,companyId,companyNo,companyName,companyStatus,userNo,tecNo,userId,userType</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 全部公司列表 -->
+	 	<action name="allCompanyList" class="companySearchAction" method="companyList">   
+	      	<result type="json">
+		      <param name="root">companyList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 修改密码（管理） -->
+	 	<action name="modifyPasswordByAdmin" class="userInfoAction" method="modifyPassword">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>	 	
+	 	<!-- 安全组界面 -->
+	 	<action name="viewSecurityGroup" class="loginAction" method="noAction">   
+	      	<result name="success" type="dispatcher">
+				<param name="location">/framework/user/securityGroupSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 安全组查询 -->
+	 	<action name="searchSecurityGroup" class="securityGroupSearchAction" method="searchSecurityGroup">   
+	      	<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 安全组保存保存 -->
+	 	<action name="saveSecurityGroup" class="securityGroupInfoAction" method="saveSecurityGroup">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 安全组权限保存 -->
+	 	<action name="saveSecurityGroupPermission" class="securityGroupInfoAction" method="saveSecurityGroupPermission">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 安全组权限列表 -->
+	 	<action name="securityGroupPermissionList" class="securityGroupInfoAction" method="securityGroupPermissionList">   
+	      	<result type="json">
+		      <param name="root">securityGroupPermissionMap</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 安全组列表 -->
+	 	<action name="securityGroupList" class="userSecurityGroupAction" method="userSecurityGroupList">   
+	      	<result type="json">
+		      <param name="root">userSecurityGroupMap</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 保存用户安全组列表 -->
+	 	<action name="saveUserSecurityGroup" class="userSecurityGroupAction" method="saveUserSecurityGroup">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 公司界面 -->
+	 	<action name="viewCompany" class="loginAction" method="noAction">   
+	      	<result name="success" type="dispatcher">
+				<param name="location">/framework/user/companySearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 公司查询 -->
+	 	<action name="searchCompany" class="companySearchAction" method="searchCompany">   
+	      	<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 公司保存 -->
+	 	<action name="saveCompany" class="companyInfoAction" method="saveCompany">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 删除公司 -->
+	 	<action name="deleteCompany" class="companyInfoAction" method="deleteCompany">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 省份列表 -->
+	 	<action name="provinceList" class="baseAction" method="provinceList">   
+	      	<result type="json">
+		      <param name="root">provinceList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 公司分类列表 -->
+	 	<action name="companyCategoryList" class="baseAction" method="unitList">   
+			<param name="unitType">COMPANY_CATEGORY</param>
+	      	<result type="json">
+		      <param name="root">unitList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	
+	 	<!-- 店铺界面 -->
+	 	<action name="viewStore" class="loginAction" method="noAction">   
+	      	<result name="success" type="dispatcher">
+				<param name="location">/framework/store/storeSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 店铺查询 -->
+	 	<action name="searchStore" class="storeSearchAction" method="storeSearch">   
+	      	<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 店铺保存 -->
+	 	<action name="saveStore" class="storeInfoAction" method="saveStore">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 淘宝店铺保存 -->
+	 	<action name="saveTbStore" class="storeInfoAction" method="saveTbStore">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 淘宝店铺信息 -->
+	 	<action name="tbStoreInfo" class="storeInfoAction" method="tbStoreInfo">   
+	      	<result type="json">
+		      <param name="includeProperties">storeId,status,address,appKey,appSercet,areaId,memo,mobile,phone,sandboxUrl,sessionKey,sessionUrl,storeNick,zip</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 删除店铺 -->
+	 	<action name="deleteStore" class="storeInfoAction" method="deleteStore">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+		<!-- 淘宝店铺区域列表 -->
+		<action name="tbStoreAreaList" class="storeInfoAction"
+			method="tbAreaList">
+			<result type="json">
+		      <param name="root">tbAreaList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	 	<!-- 店铺分类列表 -->
+	 	<action name="storeTypeList" class="baseAction" method="unitList">   
+			<param name="unitType">STORE_TYPE</param>
+	      	<result type="json">
+		      <param name="root">unitList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	
+	 	<!-- 移动 begin -->
+	 	<!-- 移动登录界面 -->
+		<action name="mobilelogin" class="loginAction" method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">/mobile/mobilelogin.jsp</param>
+			</result>
+			<result name="login" type="dispatcher">
+				<param name="location">/mobile/mobilelogin.jsp</param>
+			</result>
+		</action>	
+	 	<!-- 退出 -->
+		<action name="mobilelogout" class="loginAction" method="logout">
+			<result name="success" type="redirect">
+				<param name="location">index</param>
+			</result>
+		</action>	
+	 	<!-- 移动菜单界面 -->
+		<action name="mobilemenu" class="loginAction" method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">/mobile/mobilemenu.jsp</param>
+			</result>
+			<result name="login" type="dispatcher">
+				<param name="location">/mobile/mobilelogin.jsp</param>
+			</result>
+		</action>	
+	 	<!-- 新增会员 -->
+		<action name="mobileNewCustomer" class="loginAction" method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">/mobile/newCustomer.jsp</param>
+			</result>
+			<result name="login" type="dispatcher">
+				<param name="location">/mobile/mobilelogin.jsp</param>
+			</result>
+		</action>	
+	 	<!-- 查询会员 -->
+		<action name="mobileSearchCustomer" class="loginAction" method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">/mobile/customerSearch.jsp</param>
+			</result>
+			<result name="login" type="dispatcher">
+				<param name="location">/mobile/mobilelogin.jsp</param>
+			</result>
+		</action>	
+	 	<!--移动 end -->
+	</package>
+</struts>

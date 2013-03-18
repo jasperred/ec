@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbItemLocation"
+		table="tb_item_location"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NumIid"
+			column="num_iid"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="Zip"
+			column="zip"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Address"
+			column="address"
+			type="string"
+			not-null="false"
+			length="256"
+		/>
+		<property
+			name="City"
+			column="city"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="State"
+			column="state"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="Country"
+			column="country"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="District"
+			column="district"
+			type="string"
+			not-null="false"
+			length="256"
+		/>
+		<property
+			name="StoreId"
+			column="store_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

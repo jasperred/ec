@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="report" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>	
+		<action name="reportFileListAction" class="reportAction"
+			method="reportFileList">
+			<result type="json">  
+			    <param name="includeProperties">rowCount,fileList\[\d+\]\.*.*</param>  
+			</result> 
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="downloadSaleReportAction" class="reportAction"
+			method="searchSaleReport">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="downloadSaleReportByStateAction" class="reportAction"
+			method="searchSaleReportByState">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="downloadSaleReportBySkuAction" class="reportAction"
+			method="searchSaleReportBySku">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="viewSaleReportAction" class="reportAction"
+			method="viewReport">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/report/saleReport.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="downloadRefundReportAction" class="reportAction"
+			method="searchRefundReport">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="downloadRefundReportBySkuAction" class="reportAction"
+			method="searchRefundReportBySku">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="viewRefundReportAction" class="reportAction"
+			method="viewReport">
+			<result name="success" type="dispatcher">
+				<param name="location">application/report/refundReport.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

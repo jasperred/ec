@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="CheckRepeatNo"
+		table="check_repeat_no"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<composite-id>
+			<key-property
+				name="No"
+				column="no"
+				type="string" 
+			/>
+			<key-property
+				name="Type"
+				column="type"
+				type="string"
+			/>
+		</composite-id>
+
+
+
+	</class>	
+</hibernate-mapping>

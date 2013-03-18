@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	<bean id="dataSourceWMS" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}" />
+		<property name="jdbcUrl"
+			value="${jdbc.url}base_framework?autoReconnect=true&amp;character-set=utf-8" />
+		<property name="maxPoolSize" value="50" />
+		<property name="minPoolSize" value="10" />
+		<property name="idleConnectionTestPeriod" value="30" />
+		<property name="acquireIncrement" value="5" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<bean id="sessionFactoryWMS"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSourceWMS" />
+		</property>
+		<!--<property name="jtaTransactionManager" ref="jotmJta" />
+		-->
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>
+					classpath:com/sunmw/web/entity/
+				</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.connection.pool_size">10</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+				<prop key="hibernate.connection.autoReconnect">true</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="transactionManagerWMS"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryWMS" />
+		</property>
+	</bean>
+	 <!-- 事务通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManagerWMS">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 仓库管理 -->
+	<bean id="wmsBaseServices" class="com.sunmw.web.bean.warehouse.base.impl.WarehouseBaseServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryWMS" />
+		</property>
+	</bean>
+	<!-- 导入导出模板查询 -->
+	<bean id="ioTemplateSearchAction" class="com.sunmw.web.action.warehouse.base.IoTemplateSearchAction" scope="request">
+		<property name="wmsBaseServices">
+			<ref local="wmsBaseServices" />
+		</property>
+	</bean>
+	<!-- 区域货位查询 -->
+	<bean id="locationSearchAction" class="com.sunmw.web.action.warehouse.base.LocationSearchAction" scope="request">
+		<property name="wmsBaseServices">
+			<ref local="wmsBaseServices" />
+		</property>
+	</bean>
+	<!-- 打印模板查询 -->
+	<bean id="printTemplateSearchAction" class="com.sunmw.web.action.warehouse.base.PrintTemplateSearchAction" scope="request">
+		<property name="wmsBaseServices">
+			<ref local="wmsBaseServices" />
+		</property>
+	</bean>
+	<!-- 仓库查询 -->
+	<bean id="warehouseSearchAction" class="com.sunmw.web.action.warehouse.base.WarehouseSearchAction" scope="request">
+		<property name="wmsBaseServices">
+			<ref local="wmsBaseServices" />
+		</property>
+	</bean>
+	<!-- 盘点 -->
+	<bean id="wmsCheckServices" class="com.sunmw.web.bean.warehouse.check.impl.WarehouseCheckServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryWMS" />
+		</property>
+	</bean>
+	<!-- 盘点查询 -->
+	<bean id="checkSearchAction" class="com.sunmw.web.action.warehouse.check.CheckSearchAction" scope="request">
+		<property name="wmsCheckServices">
+			<ref local="wmsCheckServices" />
+		</property>
+	</bean>
+	<!-- 入库 -->
+	<bean id="wmsInServices" class="com.sunmw.web.bean.warehouse.in.impl.WarehouseInServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryWMS" />
+		</property>
+	</bean>
+	<!-- 入库指示查询 -->
+	<bean id="inNotifySearchAction" class="com.sunmw.web.action.warehouse.in.InNotifySearchAction" scope="request">
+		<property name="wmsInServices">
+			<ref local="wmsInServices" />
+		</property>
+	</bean>
+	<!-- 入库单查询 -->
+	<bean id="inOrderSearchAction" class="com.sunmw.web.action.warehouse.in.InOrderSearchAction" scope="request">
+		<property name="wmsInServices">
+			<ref local="wmsInServices" />
+		</property>
+	</bean>
+	<!-- 库存 -->
+	<bean id="wmsInvServices" class="com.sunmw.web.bean.warehouse.inv.impl.WarehouseInvServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryWMS" />
+		</property>
+	</bean>
+	<!-- 库存调整查询 -->
+	<bean id="invAdjustSearchAction" class="com.sunmw.web.action.warehouse.inv.InvAdjustSearchAction" scope="request">
+		<property name="wmsInvServices">
+			<ref local="wmsInvServices" />
+		</property>
+	</bean>
+	<!-- 库存查询 -->
+	<bean id="invSearchAction" class="com.sunmw.web.action.warehouse.inv.InvSearchAction" scope="request">
+		<property name="wmsInvServices">
+			<ref local="wmsInvServices" />
+		</property>
+	</bean>
+	<!-- 出库 -->
+	<bean id="wmsOutServices" class="com.sunmw.web.bean.warehouse.out.impl.WarehouseOutServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryWMS" />
+		</property>
+	</bean>
+	<!-- 出库指示查询 -->
+	<bean id="outNotifySearchAction" class="com.sunmw.web.action.warehouse.out.OutNotifySearchAction" scope="request">
+		<property name="wmsOutServices">
+			<ref local="wmsOutServices" />
+		</property>
+	</bean>
+	<!-- 出库单查询 -->
+	<bean id="outOrderSearchAction" class="com.sunmw.web.action.warehouse.out.OutOrderSearchAction" scope="request">
+		<property name="wmsOutServices">
+			<ref local="wmsOutServices" />
+		</property>
+	</bean>
+	<!-- 装箱单查询 -->
+	<bean id="packingSearchAction" class="com.sunmw.web.action.warehouse.out.PackingSearchAction" scope="request">
+		<property name="wmsOutServices">
+			<ref local="wmsOutServices" />
+		</property>
+	</bean>
+	<!-- 拣货单查询 -->
+	<bean id="pickingSearchAction" class="com.sunmw.web.action.warehouse.out.PickingSearchAction" scope="request">
+		<property name="wmsOutServices">
+			<ref local="wmsOutServices" />
+		</property>
+	</bean>
+	<!-- 发货单查询 -->
+	<bean id="shipmentSearchAction" class="com.sunmw.web.action.warehouse.out.ShipmentSearchAction" scope="request">
+		<property name="wmsOutServices">
+			<ref local="wmsOutServices" />
+		</property>
+	</bean>
+	
+</beans>

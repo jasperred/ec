@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	<bean id="dataSourceERP" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}" />
+		<property name="jdbcUrl"
+			value="${jdbc.url}base_framework?autoReconnect=true&amp;character-set=utf-8" />
+		<property name="maxPoolSize" value="50" />
+		<property name="minPoolSize" value="10" />
+		<property name="idleConnectionTestPeriod" value="30" />
+		<property name="acquireIncrement" value="5" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<bean id="sessionFactoryERP"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSourceERP" />
+		</property>
+		<!--<property name="jtaTransactionManager" ref="jotmJta" />
+		-->
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>
+					classpath:com/sunmw/web/entity/
+				</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.connection.pool_size">10</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+				<prop key="hibernate.connection.autoReconnect">true</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	 <!-- 事务通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- Spring AOP config -->
+	<aop:config>
+		<!-- 切入点 -->
+		<aop:pointcut id="newServicesPointcut"
+			expression="execution(* com.sunmw.web.bean.*.impl.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="newServicesPointcut" />
+	</aop:config>
+	<!-- 基础信息 -->
+	<bean id="baseServices" class="com.sunmw.web.bean.base.impl.BaseServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 基础信息 -->
+	<bean id="baseAction" class="com.sunmw.web.action.base.BaseAction"
+		scope="request">
+		<property name="baseServices">
+			<ref bean="baseServices" />
+		</property>
+	</bean>
+	<!-- 店铺 -->
+	<bean id="storeAction" class="com.sunmw.web.action.base.StoreAction"
+		scope="request">
+		<property name="baseServices">
+			<ref bean="baseServices" />
+		</property>
+	</bean>
+	<!-- 状态 -->
+	<bean id="statusAction" class="com.sunmw.web.action.base.StatusAction"
+		scope="request">
+		<property name="baseServices">
+			<ref bean="baseServices" />
+		</property>
+	</bean>
+	<!-- 订单类 -->
+	<bean id="orderServices" class="com.sunmw.web.bean.order.impl.OrderServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 订单数据处理类 -->
+	<bean id="orderDataServices" class="com.sunmw.web.bean.order.impl.OrderDataServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 订单新建 -->
+	<bean id="newOrderAction" class="com.sunmw.web.action.order.OrderNewAction"
+		scope="request">
+		<property name="orderServices">
+			<ref bean="orderServices" />
+		</property>
+		<property name="addressServices">
+			<ref bean="addressServices" />
+		</property>
+	</bean>
+	<!-- 订单查询 -->
+	<bean id="orderSearchAction" class="com.sunmw.web.action.order.OrderSearchAction"
+		scope="request">
+		<property name="orderServices">
+			<ref bean="orderServices" />
+		</property>
+	</bean>
+	<!-- 订单明细查询 -->
+	<bean id="orderItemSearchAction" class="com.sunmw.web.action.order.OrderItemSearchAction"
+		scope="request">
+		<property name="orderServices">
+			<ref bean="orderServices" />
+		</property>
+	</bean>
+	<!-- 订单审核和预留 -->
+	<bean id="orderAuditedAndReceiveAction" class="com.sunmw.web.action.order.OrderAuditedAndReceive"
+		scope="request">
+		<property name="orderServices">
+			<ref bean="orderServices" />
+		</property>
+	</bean>
+	<!-- 订单内容 -->
+	<bean id="orderInfoAction" class="com.sunmw.web.action.order.OrderInfoAction"
+		scope="request">
+		<property name="orderServices">
+			<ref bean="orderServices" />
+		</property>
+	</bean>
+	<!-- 订单任务 -->
+	<bean id="orderTaskServices" class="com.sunmw.web.bean.data.impl.OrderTaskServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 导出订单到WMS -->
+	<bean id="exportErpOrderToWmsAction" class="com.sunmw.taobao.action.ExportErpOrderToWmsAction"
+		scope="request">
+		<property name="orderTaskServices">
+			<ref local="orderTaskServices" />
+		</property>
+	</bean>
+	<!-- 订单任务画面 -->
+	<bean id="orderTaskViewAction" class="com.sunmw.web.action.data.OrderTaskViewAction"
+		scope="request">
+	</bean>
+	<!-- 文件上传 -->
+	<bean id="fileUploadAction" class="com.sunmw.web.action.common.FileUploadAction"
+		scope="request">
+	</bean>
+	<!-- 文件上传 -->
+	<bean id="singleFileUploadAction" class="com.sunmw.web.action.common.SingleFileUploadAction"
+		scope="request">
+	</bean>
+	<!-- 退货 -->
+	<bean id="refundServices" class="com.sunmw.web.bean.refund.impl.RefundServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 查询退货 -->
+	<bean id="searchRefundAction" class="com.sunmw.web.action.refund.RefundSearchAction"
+		scope="request">
+		<property name="refundServices">
+			<ref local="refundServices" />
+		</property>
+	</bean>
+	<!-- 退货信息 -->
+	<bean id="refundInfoAction" class="com.sunmw.web.action.refund.RefundInfoAction"
+		scope="request">
+		<property name="refundServices">
+			<ref local="refundServices" />
+		</property>
+	</bean>
+	<!-- 报表查询 -->
+	<bean id="reportServices" class="com.sunmw.web.bean.report.impl.ReportServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 销售报表 -->
+	<bean id="reportAction" class="com.sunmw.web.action.report.ReportAction"
+		scope="request">
+		<property name="reportServices">
+			<ref local="reportServices" />
+		</property>
+	</bean>
+	<!-- 退款任务画面 -->
+	<bean id="refundTaskViewAction" class="com.sunmw.web.action.data.RefundTaskViewAction"
+		scope="request">
+	</bean>
+	<!-- 退款任务 -->
+	<bean id="refundTaskServices" class="com.sunmw.web.bean.data.impl.RefundTaskServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 导出退款订单到WMS -->
+	<bean id="exportErpRefundToWmsAction" class="com.sunmw.taobao.action.ExportErpRefundToWmsAction"
+		scope="request">
+		<property name="refundTaskServices">
+			<ref local="refundTaskServices" />
+		</property>
+	</bean>
+	<!-- 导入退款订单到ERP -->
+	<bean id="importErpRefundToErpAction" class="com.sunmw.taobao.action.ImportErpRefundAction"
+		scope="request">
+		<property name="refundTaskServices">
+			<ref local="refundTaskServices" />
+		</property>
+	</bean>
+	<!-- 退款审核和预留 -->
+	<bean id="refundAuditedAndReceiveAction" class="com.sunmw.web.action.refund.RefundAuditedAndReceive"
+		scope="request">
+		<property name="refundServices">
+			<ref bean="refundServices" />
+		</property>
+	</bean>
+	<!-- 退款单操作 -->
+	<bean id="refundProcessAction" class="com.sunmw.web.action.refund.RefundProcessAction"
+		scope="request">
+		<property name="refundServices">
+			<ref bean="refundServices" />
+		</property>
+		<property name="orderServices">
+			<ref bean="orderServices" />
+		</property>
+	</bean>
+	<!-- 库存处理 -->
+	<bean id="inventoryServices" class="com.sunmw.web.bean.inventory.impl.InventoryServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 库存任务 -->
+	<bean id="inventoryTaskViewAction" class="com.sunmw.web.action.data.InventoryTaskViewAction"
+		scope="request">
+	</bean>
+	<!-- 商品管理类 -->
+	<bean id="productServices" class="com.sunmw.web.bean.product.impl.ProductServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 库存查询 -->
+	<bean id="inventorySearchAction" class="com.sunmw.web.action.inventory.InventorySearchAction"
+		scope="request">
+		<property name="inventoryServices">
+			<ref bean="inventoryServices" />
+		</property>
+	</bean>
+	<!-- 仓库列表 -->
+	<bean id="warehouseListAction" class="com.sunmw.web.action.base.WarehouseAction"
+		scope="request">
+		<property name="baseServices">
+			<ref bean="baseServices" />
+		</property>
+	</bean>
+	<!-- 入库 -->
+	<bean id="inventoryInServices" class="com.sunmw.web.bean.in.impl.InventoryInServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 入库查询 -->
+	<bean id="inventoryInSearchAction" class="com.sunmw.web.action.in.InventoryInSearchAction"
+		scope="request">
+		<property name="inventoryInServices">
+			<ref bean="inventoryInServices" />
+		</property>
+	</bean>
+	<!-- SKU查询 -->
+	<bean id="skuSearchAction" class="com.sunmw.web.action.product.SkuSearchAction"
+		scope="request">
+		<property name="productServices">
+			<ref bean="productServices" />
+		</property>
+	</bean>
+	<!-- 商品编码生成 -->
+	<bean id="generateItemCodeServices"
+		class="com.sunmw.web.bean.item.impl.GenerateItemCodeServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 商品编码生成查询 -->
+	<bean id="itemGenerateCodeSearchAction" class="com.sunmw.web.action.item.ItemGenerateCodeSearchAction"
+		scope="request">
+		<property name="generateItemCodeServices">
+			<ref bean="generateItemCodeServices" />
+		</property>
+	</bean>
+	<!-- 商品编码生成-->
+	<bean id="itemGenerateCodeAction" class="com.sunmw.web.action.item.ItemGenerateCodeAction"
+		scope="request">
+		<property name="generateItemCodeServices">
+			<ref bean="generateItemCodeServices" />
+		</property>
+	</bean>
+	<!-- 商品编码处理-->
+	<bean id="itemCodeInfoAction" class="com.sunmw.web.action.item.ItemCodeInfoAction"
+		scope="request">
+		<property name="generateItemCodeServices">
+			<ref bean="generateItemCodeServices" />
+		</property>
+	</bean>
+	<!-- 商品编码类型处理-->
+	<bean id="itemGenerateTypeInfoAction" class="com.sunmw.web.action.item.ItemGenerateTypeInfoAction"
+		scope="request">
+		<property name="generateItemCodeServices">
+			<ref bean="generateItemCodeServices" />
+		</property>
+	</bean>
+	<!-- 商品编码类型查询-->
+	<bean id="itemGenerateTypeListAction" class="com.sunmw.web.action.item.ItemGenerateTypeListAction"
+		scope="request">
+		<property name="generateItemCodeServices">
+			<ref bean="generateItemCodeServices" />
+		</property>
+	</bean>
+	<!-- 商品类-->
+	<bean id="itemServices"
+		class="com.sunmw.web.bean.item.impl.ItemServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 商品查询-->
+	<bean id="itemSkuSearchAction" class="com.sunmw.web.action.item.SkuSearchAction">
+		<property name="itemServices">
+			<ref bean="itemServices" />
+		</property>
+	</bean>
+	<!-- 地址服务类-->
+	<bean id="addressServices"
+		class="com.sunmw.web.bean.address.impl.AddressServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 地址查询-->
+	<bean id="addressSearchAction" class="com.sunmw.web.action.address.AddressSearchAction">
+		<property name="addressServices">
+			<ref bean="addressServices" />
+		</property>
+	</bean>
+
+	<!-- 任务管理 开始 -->
+	<!-- 任务服务类 -->
+	<bean id="taskServices" class="com.sunmw.web.bean.task.impl.TaskServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 任务服务类 -->
+	<bean id="ifDefineSearchAction" class="com.sunmw.web.action.task.IfDefineSearchAction"
+		scope="request">
+		<property name="taskServices">
+			<ref bean="taskServices" />
+		</property>
+	</bean>
+
+	<!-- 任务操作类 -->
+	<bean id="ifDefineProcessAction" class="com.sunmw.web.action.task.IfDefineProcessAction"
+		scope="request">
+		<property name="taskServices">
+			<ref bean="taskServices" />
+		</property>
+	</bean>
+
+	<!-- 任务服务类 -->
+	<bean id="taskDefineSearchAction" class="com.sunmw.web.action.task.TaskDefineSearchAction"
+		scope="request">
+		<property name="taskServices">
+			<ref bean="taskServices" />
+		</property>
+	</bean>
+
+	<!-- 任务操作类 -->
+	<bean id="taskDefineProcessAction" class="com.sunmw.web.action.task.TaskDefineProcessAction"
+		scope="request">
+		<property name="taskServices">
+			<ref bean="taskServices" />
+		</property>
+	</bean>
+
+	<!-- 任务服务类 -->
+	<bean id="taskQueueSearchAction" class="com.sunmw.web.action.task.TaskQueueSearchAction"
+		scope="request">
+		<property name="taskServices">
+			<ref bean="taskServices" />
+		</property>
+	</bean>
+	<!-- 任务日志 -->
+	<bean id="taskLogSearchAction" class="com.sunmw.web.action.task.TaskLogSearchAction"
+		scope="request">
+		<property name="taskServices">
+			<ref bean="taskServices" />
+		</property>
+	</bean>
+	<!-- 任务管理 结束 -->
+
+
+	<!-- WMS接口 -->
+	<bean id="wmsInterfaceServices"
+		class="com.sunmw.web.bean.dataInterface.impl.WmsInterfaceServicesImpl">
+	</bean>
+	<!-- ERP接口 -->
+	<bean id="erpInterfaceServices"
+		class="com.sunmw.web.bean.dataInterface.impl.ErpInterfaceServicesImpl">
+	</bean>
+	<!-- Customer -->
+	<bean id="customerServices"
+		class="com.sunmw.web.bean.customer.impl.CustomerServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- Customer信息-->
+	<bean id="customerInfoAction" class="com.sunmw.web.action.customer.CustomerInfoAction">
+		<property name="customerServices">
+			<ref bean="customerServices" />
+		</property>
+	</bean>
+	<!-- Customer查询-->
+	<bean id="customerSearchAction" class="com.sunmw.web.action.customer.CustomerSearchAction">
+		<property name="customerServices">
+			<ref bean="customerServices" />
+		</property>
+	</bean>
+</beans>

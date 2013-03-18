@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="StatusItem"
+		table="status_item"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="string"
+			column="STATUS_ID"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="StatusTypeId"
+			column="STATUS_TYPE_ID"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="StatusCode"
+			column="STATUS_CODE"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="Sequence"
+			column="SEQUENCE"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Description"
+			column="DESCRIPTION"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="InventoryLog"
+		table="inventory_log"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="id"
+		>
+			<generator class="identity"/>
+		</id>
+		<property
+			name="IoType"
+			column="io_type"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="LogType"
+			column="log_type"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="BillNo"
+			column="bill_no"
+			type="string"
+			not-null="false"
+			length="40"
+		/>
+		<property
+			name="InvId"
+			column="inv_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="SkuCd"
+			column="sku_cd"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="WhId"
+			column="wh_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="InvType"
+			column="inv_type"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="Quantity"
+			column="quantity"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Cuser"
+			column="cuser"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="Muser"
+			column="muser"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

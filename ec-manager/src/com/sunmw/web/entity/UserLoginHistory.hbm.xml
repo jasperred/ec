@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="UserLoginHistory"
+		table="user_login_history"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<composite-id name="Id" class="UserLoginHistoryPK">
+			<key-property
+				name="UserId"
+				column="USER_ID"
+				type="integer"
+			/>
+			<key-property
+				name="FromDate"
+				column="FROM_DATE"
+				type="timestamp"
+			/>
+		</composite-id>
+
+		<property
+			name="VisitId"
+			column="VISIT_ID"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="ThruDate"
+			column="THRU_DATE"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="PasswordUsed"
+			column="PASSWORD_USED"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="SuccessfulLogin"
+			column="SUCCESSFUL_LOGIN"
+			type="string"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Cuser"
+			column="cuser"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Muser"
+			column="muser"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

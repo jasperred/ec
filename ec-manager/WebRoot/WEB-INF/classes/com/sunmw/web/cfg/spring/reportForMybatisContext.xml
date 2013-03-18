@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	<bean id="dataSourceForReport" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.url}report?autoReconnect=true&amp;character-set=utf-8"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="idleConnectionTestPeriod" value="30"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="user"  value= "${jdbc.username}"  />         
+    	<property name="password"  value= "${jdbc.password}"  /> 
+	</bean>
+	<bean id="sessionFactoryForReport" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceForReport"/>
+	</bean>
+	<bean id="sqlSessionReport" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sessionFactoryForReport" />
+	</bean>
+	<bean id="alipayFinancialDetailMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.report.AlipayFinancialDetailMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForReport"/>
+	</bean>
+	<bean id="taobaoAccountHeadMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.report.TaobaoAccountHeadMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForReport"/>
+	</bean>
+	<bean id="taobaoAccountDetailMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.report.TaobaoAccountDetailMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForReport"/>
+	</bean>	
+	<bean id="taobaoAccountOtherMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.report.TaobaoAccountOtherMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForReport"/>
+	</bean>
+	<bean id="taobaoAccountRefundMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.report.TaobaoAccountRefundMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForReport"/>
+	</bean>
+	<bean id="financialServicesMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.report.FinancialServicesMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForReport"/>
+	</bean>
+	<!-- 财务报表服务类 -->
+	<bean id="alipayFinancialServices" class="com.sunmw.web.bean.financial.impl.AlipayFinancialServicesImpl">
+		<property name="alipayFinancialDetailMapper">
+			<ref bean="alipayFinancialDetailMapper" />
+		</property>
+		<property name="taobaoAccountHeadMapper">
+			<ref bean="taobaoAccountHeadMapper" />
+		</property>
+		<property name="taobaoAccountDetailMapper">
+			<ref bean="taobaoAccountDetailMapper" />
+		</property>
+		<property name="taobaoAccountOtherMapper">
+			<ref bean="taobaoAccountOtherMapper" />
+		</property>
+		<property name="taobaoAccountRefundMapper">
+			<ref bean="taobaoAccountRefundMapper" />
+		</property>
+		<property name="financialServicesMapper">
+			<ref bean="financialServicesMapper" />
+		</property>
+	</bean>
+	<!-- 财务报表导入 -->
+	<bean id="importAlipayFinancialReportCsvAction" class="com.sunmw.web.action.financial.ImportAlipayFinancialReportCsvAction" scope="request">
+		<property name="alipayFinancialServices">
+			<ref bean="alipayFinancialServices" />
+		</property>
+	</bean>
+	<!-- 对账主表查询 -->
+	<bean id="searchTaobaoAccountHead" class="com.sunmw.web.action.financial.TaobaoAccountHeadSearchAction" scope="request">
+		<property name="alipayFinancialServices">
+			<ref bean="alipayFinancialServices" />
+		</property>
+	</bean>
+	<!-- 生成淘宝对账报表 -->
+	<bean id="taobaoAccountReport" class="com.sunmw.web.action.financial.TaobaoAccountReportAction" scope="request">
+		<property name="alipayFinancialServices">
+			<ref bean="alipayFinancialServices" />
+		</property>
+	</bean>
+	<!-- 淘宝对账报表信息 -->
+	<bean id="taobaoAccountHeadInfo" class="com.sunmw.web.action.financial.TaobaoAccountInfo" scope="request">
+		<property name="alipayFinancialServices">
+			<ref bean="alipayFinancialServices" />
+		</property>
+	</bean>
+	<!-- 导出淘宝对账报表 -->
+	<bean id="exportTaobaoAccountReport" class="com.sunmw.web.action.financial.ExportFinancialReport" scope="request">
+		<property name="alipayFinancialServices">
+			<ref bean="alipayFinancialServices" />
+		</property>
+	</bean>
+</beans>

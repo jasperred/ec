@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="warehouse" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>	
+		<!-- 导入导出模板界面 -->
+		<action name="viewIoTemplateManagerAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/base/ioTemplateManager.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 区域货位界面 -->
+		<action name="viewLocationManagerAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/base/locationManager.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 打印模板界面 -->
+		<action name="viewPrintTemplateManagerAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/base/printTemplateManager.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 仓库管理界面 -->
+		<action name="viewWarehouseManagerAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/base/warehourseManager.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 盘点确认界面 -->
+		<action name="viewCheckConfirmAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/check/checkConfirm.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 盘点审核界面 -->
+		<action name="viewCheckingAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/check/checking.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 新建盘点界面 -->
+		<action name="viewNewCheckAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/check/newCheck.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 上架界面 -->
+		<action name="viewGoodsShelfAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/in/goodsShelfSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 入库指示界面 -->
+		<action name="viewReceiveNotifyAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/in/receiveNotifySearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 入库单界面 -->
+		<action name="viewReceiveOrderAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/in/receiveOrderSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 库存调整界面 -->
+		<action name="viewInvAdjustAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/inv/invAdjust.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 库存查询界面 -->
+		<action name="viewInvSearchAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/inv/invSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 出库指示界面 -->
+		<action name="viewOutNotifyAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/out/outNotifySearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 出库单界面 -->
+		<action name="viewOutOrderAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/out/outOrderSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 装箱单界面 -->
+		<action name="viewPackingAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/out/packingSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 拣货单界面 -->
+		<action name="viewPickingAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/out/pickingSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 发货单界面 -->
+		<action name="viewShipmentAction" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/warehouse/out/shipmentSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

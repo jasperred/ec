@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.paipai.entity">
+	<class
+		name="PpStore"
+		table="pp_store"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="store_id"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="StoreNick"
+			column="store_nick"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="Uin"
+			column="uin"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="Spid"
+			column="spid"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="Token"
+			column="token"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="SecretKey"
+			column="secret_key"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbRefundRemindTimeout"
+		table="tb_refund_remind_timeout"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="RemindType"
+			column="remind_type"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="ExistTimeout"
+			column="exist_timeout"
+			type="boolean"
+			not-null="false"
+		/>
+		<property
+			name="Timeout"
+			column="timeout"
+			type="timestamp"
+			not-null="false"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

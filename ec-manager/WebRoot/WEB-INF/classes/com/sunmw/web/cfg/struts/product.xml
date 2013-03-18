@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="product" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>
+		<!-- 商品下载界面 -->
+		<action name="viewDownloadProductAction" class="loginAction"
+			method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">application/product/tbProductDownload.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 同步商品 -->
+		<action name="syncProductForTbAction" class="productSynchronizationAction"
+			method="syncProductForTb">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 更新淘宝SKU价格 -->
+		<action name="updateTaobaoSkuPriceAction" class="updateTaobaoSkuPriceAction"
+			method="taobaoSkuPriceUpdate">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- SKU查询页面 -->
+		<action name="viewSkuAction" class="skuSearchAction"
+			method="viewSkuSearch">
+			<result name="success" type="dispatcher">
+				<param name="location">application/product/skuSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- SKU查询 -->
+		<action name="skuSearchAction" class="skuSearchAction"
+			method="orderSearch">
+			<result name="success" type="dispatcher">
+				<param name="location">application/product/skuResult.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- SKU导出 -->
+		<action name="skuExportAction" class="skuSearchAction"
+			method="exportSku">
+			<result name="success" type="dispatcher">
+				<param name="location">application/common/export.jsp</param>
+			</result>
+			<result name="error" type="dispatcher">
+				<param name="location">application/common/export.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品编码生成查询界面 -->
+		<action name="viewItemCode" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/item/itemCodeSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品编码生成查询 -->
+		<action name="searchGenerateItemCode" class="itemGenerateCodeSearchAction"
+			method="searchGenerateItemCode">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品编码生成导出 -->
+		<action name="exportGenerateItemCode" class="itemGenerateCodeSearchAction"
+			method="exportGenerateItemCode">
+			<result type="json">
+		      <param name="includeProperties">exportUrl</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>		
+		<!-- 商品编码生成界面 -->
+		<action name="viewGenerateItemCode" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/item/itemCodeImport.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品编码生成 -->
+		<action name="generateItemCode" class="itemGenerateCodeAction"
+			method="importItemCode">
+			<result type="json">
+		      <param name="includeProperties">success,message,messageList\[\d+\]\.*.*</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品编码信息 -->
+		<action name="getItemCodeInfo" class="itemCodeInfoAction"
+			method="getItemCodeInfo">
+			<result type="json">
+		      <param name="includeProperties">success,message,itemId,brand,cat,subCat,year,season,sex,dept,detail,serial,itemCode,itemName,sel,imageUrl</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品编码保存 -->
+		<action name="saveItemCode" class="itemCodeInfoAction"
+			method="saveItemCode">
+			<result type="json">
+		      <param name="includeProperties">success,message,itemId</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品品番 -->
+		<action name="getItemSerial" class="itemCodeInfoAction"
+			method="getItemSerial">
+			<result type="json">
+		      <param name="includeProperties">serial</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品图片保存-->
+		<action name="saveItemImage" class="itemCodeInfoAction"
+			method="saveItemImage">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品编码生成界面 -->
+		<action name="viewGenerateItemType" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/item/itemGenerateTypeSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品编码类型保存-->
+		<action name="saveItemGenerateType" class="itemGenerateTypeInfoAction"
+			method="saveItemGenerateType">
+			<result type="json">
+		      <param name="includeProperties">success,message,typeId</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品编码类型删除-->
+		<action name="deleteItemGenerateType" class="itemGenerateTypeInfoAction"
+			method="deleteItemGenerateType">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 商品编码类型查询-->
+		<action name="searchItemGenerateType" class="itemGenerateTypeListAction"
+			method="searchItemGenerateType">
+			<result type="json">
+		      <param name="root">typeList</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 按条码 查询SKU -->
+		<action name="itemSkuSearchByBarcode" class="itemSkuSearchAction"
+			method="searchSkuByBarcode">
+			<result type="json">
+		      <param name="includeProperties">skuInfo.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- Sku查询 -->
+		<action name="itemSkuSearch" class="itemSkuSearchAction"
+			method="searchSku">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

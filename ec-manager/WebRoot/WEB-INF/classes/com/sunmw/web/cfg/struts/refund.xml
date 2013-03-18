@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="refund" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>
+		<!-- 退款页面 -->
+		<action name="viewRefundAction" class="searchRefundAction"
+			method="viewRefundSearch">
+			<result name="success" type="dispatcher">
+				<param name="location">application/refund/refundSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退款查询 -->
+		<action name="refundSearchAction" class="searchRefundAction"
+			method="refundSearch">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 导出退款 -->
+		<action name="exportRefund" class="searchRefundAction"
+			method="exportRefund">
+			<result type="json">
+		      <param name="includeProperties">exportUrl</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退款内容 -->
+		<action name="refundInfoAction" class="refundInfoAction"
+			method="refundInfo">
+			<result type="json">
+		      <param name="root">refundInfo</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退款审核 -->
+		<action name="refundAuditedAction" class="refundAuditedAndReceiveAction"
+			method="auditedRefund">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退款批量审核-->
+		<action name="refundsAuditedAction" class="refundAuditedAndReceiveAction"
+			method="auditedRefunds">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退款保留 -->
+		<action name="refundReceiveAction" class="refundAuditedAndReceiveAction"
+			method="receiveRefund">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退款批量保留 -->
+		<action name="refundsReceiveAction" class="refundAuditedAndReceiveAction"
+			method="receiveRefunds">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退款保留原因-->
+		<action name="refundReceiveMessageAction" class="statusAction"
+			method="statusListByType">
+			<result name="success" type="dispatcher">
+				<param name="location">application/refund/receiveMessage.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退款保存-->
+		<action name="refundSaveAction" class="refundProcessAction"
+			method="saveRefund">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退款关闭-->
+		<action name="refundClose" class="refundProcessAction"
+			method="closeRefund">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退款恢复-->
+		<action name="refundRecovery" class="refundProcessAction"
+			method="recoveryRefund">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 获得淘宝订单信息-->
+		<action name="importTbOrderInfoAction" class="refundProcessAction"
+			method="getTbOrderInfo">
+			<result type="json">
+		      <param name="root">orderInfo</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

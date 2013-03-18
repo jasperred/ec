@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="taobao" extends="struts-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login" type="redirect">viewLogin.action</result>
+		</global-results>
+		<!-- 下载淘宝订单 -->
+		<action name="downloadTBOrderAction" class="downloadTBOrderAction"
+			method="downloadTBOrder">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 导出仓库指示 -->
+		<action name="exportOrderForWMSAction" class="exportErpOrderToWmsAction"
+			method="exportOrderForWMS">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 导入物流发货信息 -->
+		<action name="importOrderForWMSAction" class="importWmsLogisticsAction"
+			method="importWmsLogistics">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 下载淘宝物流公司 -->
+		<action name="downloadTbLogisticsCompanyAction" class="tbBaseAction"
+			method="tbLogisticsCompany">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 下载退货信息 -->
+		<action name="downloadTbRefundAction" class="downloadTBRefundAction"
+			method="downloadTbRefunds">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 导出退款订单 -->
+		<action name="exportRefundForWMSAction" class="exportErpRefundToWmsAction"
+			method="exportRefundForWMS">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 导入退款订单 -->
+		<action name="importRefundForErpAction" class="importErpRefundToErpAction"
+			method="importErpRefund">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 下载淘宝产品 -->
+		<action name="downloadTbProductAction" class="downloadTBProductAction"
+			method="downloadProduct">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 下载淘宝商品 -->
+		<action name="downloadTbItemAction" class="downloadTBProductAction"
+			method="downloadItem">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 导入库存 -->
+		<action name="importInventoryToErpAction" class="importInventoryToErpAction"
+			method="importInventoryToErp">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 更新淘宝库存 -->
+		<action name="updateTbInventoryAction" class="updateTaobaoInventoryAction"
+			method="updateTbInventory">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 淘宝店铺类目 -->
+		<action name="tbSellercatsAction" class="downloadTBShopcatsAction"
+			method="tbSellercats">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/shop/sellercatsList.jsp</param>
+			</result>
+		</action>
+		<!-- 获得淘宝分类 -->
+		<action name="downloadTbCat" class="tbBaseAction"
+			method="tbCat">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="TaskQueue"
+		table="task_queue"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="task_queue_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="TaskId"
+			column="task_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="StartTime"
+			column="start_time"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="EndTime"
+			column="end_time"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Status"
+			column="status"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="IsSuccess"
+			column="is_success"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="ExecNum"
+			column="exec_num"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Cuser"
+			column="cuser"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Muser"
+			column="muser"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

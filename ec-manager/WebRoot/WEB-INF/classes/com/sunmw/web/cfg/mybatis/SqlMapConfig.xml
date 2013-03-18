@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+		"http://www.ibatis.com/dtd/ibatis-2-config.dtd">
+<sqlMapConfig>
+	<settings 
+	cacheModelsEnabled="true" 
+	enhancementEnabled="true"
+	lazyLoadingEnabled="true" 
+	maxRequests="32" 
+	maxSessions="10"
+	maxTransactions="5" 
+	useStatementNamespaces="true" />
+
+	<!-- tables Ibatis SQL Map -->
+	<sqlMap resource="com/ami/ifs/cfg/mybatis/tables/CompanyMapper.xml" />
+	
+</sqlMapConfig>

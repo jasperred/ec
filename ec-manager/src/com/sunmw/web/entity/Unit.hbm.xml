@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="Unit"
+		table="unit"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="unit_id" 
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="UnitType"
+			column="unit_type"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="UnitNo"
+			column="unit_no"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="ParentUnitNo"
+			column="parent_unit_no"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="UnitName"
+			column="unit_name"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="MustMemo"
+			column="must_memo"
+			type="string"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="Memo"
+			column="memo"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+			length="23"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+			length="23"
+		/>
+		<property
+			name="Cuser"
+			column="cuser"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="Muser"
+			column="muser"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="DispIndex"
+			column="disp_index"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

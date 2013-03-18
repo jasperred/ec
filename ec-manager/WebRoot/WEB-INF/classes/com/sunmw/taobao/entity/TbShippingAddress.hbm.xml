@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbShippingAddress"
+		table="tb_shipping_address"
+	>
+		<meta attribute="sync-DAO">false</meta>
+
+		<meta attribute="sync-DAO">false</meta>
+
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="AddressId"
+			column="address_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="ReceiverName"
+			column="receiver_name"
+			type="string"
+			not-null="false"
+			length="45"
+		/>
+		<property
+			name="Phone"
+			column="phone"
+			type="string"
+			not-null="false"
+			length="45"
+		/>
+		<property
+			name="Mobile"
+			column="mobile"
+			type="string"
+			not-null="false"
+			length="45"
+		/>
+		<property
+			name="IsDefault"
+			column="is_default"
+			type="boolean"
+			not-null="false"
+		/>
+		<property
+			name="Created"
+			column="created"
+			type="timestamp"
+			not-null="false"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

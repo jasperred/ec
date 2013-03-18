@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="InvRuleDetail"
+		table="inv_rule_detail"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="RuleId"
+			column="rule_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="SkuCode"
+			column="sku_code"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="ProportionStr"
+			column="proportion_str"
+			type="string"
+			not-null="false"
+			length="80"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

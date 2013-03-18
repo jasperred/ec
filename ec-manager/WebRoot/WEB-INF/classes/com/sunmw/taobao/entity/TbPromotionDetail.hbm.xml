@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbPromotionDetail"
+		table="tb_promotion_detail"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+ 
+		<property
+			name="TbPromotionDetailId"
+			column="tb_promotion_detail_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="PromotionName"
+			column="promotion_name"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="DiscountFee"
+			column="discount_fee"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="GiftItemName"
+			column="gift_item_name"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="TradeId"
+			column="trade_id"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="UpdateTime"
+			column="update_time"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="UpdateFlag"
+			column="update_flag"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		
+		<property
+			name="StoreId"
+			column="store_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+
+	</class>	
+</hibernate-mapping>

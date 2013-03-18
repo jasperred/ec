@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbItemImg"
+		table="tb_item_img"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="TbItemImgId"
+			column="tb_item_img_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="NumIid"
+			column="num_iid"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="Url"
+			column="url"
+			type="string" 
+			not-null="false"
+			length="128"
+		/>
+		<property
+			name="Position"
+			column="position"
+			type="java.lang.Long"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Created"
+			column="created"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="StoreId"
+			column="store_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

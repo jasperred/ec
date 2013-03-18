@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="IfDefineProp"
+		table="if_define_prop"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="java.lang.Long"
+			column="If_define_prop_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="IfId"
+			column="If_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="19"
+		/>
+		<property
+			name="PropName"
+			column="Prop_name"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		<property
+			name="PropValue"
+			column="Prop_value"
+			type="string"
+			not-null="false"
+		/>
+		<property
+			name="PropOrder"
+			column="Prop_order"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Remark"
+			column="Remark"
+			type="string"
+			not-null="false"
+			length="128"
+		/>
+		<property
+			name="Status"
+			column="Status"
+			type="java.lang.Short"
+			not-null="false"
+			length="5"
+		/>
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Cuser"
+			column="cuser"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Muser"
+			column="muser"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

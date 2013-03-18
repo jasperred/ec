@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="TaskLog"
+		table="task_log"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="task_log_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="TaskId"
+			column="task_id"
+			type="java.lang.Long"
+			not-null="false"
+			length="19"
+		/>
+		<property
+			name="LogStartTime"
+			column="log_start_time"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="LogEndTime"
+			column="log_end_time"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="LogContent"
+			column="log_content"
+			type="string"
+			not-null="false"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

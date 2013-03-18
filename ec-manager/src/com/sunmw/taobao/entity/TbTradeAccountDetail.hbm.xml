@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.taobao.entity">
+	<class
+		name="TbTradeAccountDetail"
+		table="tb_trade_account_detail"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="local_id"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="TaobaoTid"
+			column="taobao_tid"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="AlipayTid"
+			column="alipay_tid"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="Date"
+			column="date"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="AccountBalance"
+			column="account_balance"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="Income"
+			column="income"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="Expense"
+			column="expense"
+			type="big_decimal"
+			not-null="false"
+			length="18"
+		/>
+		<property
+			name="TradePartner"
+			column="trade_partner"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="TradeLocale"
+			column="trade_locale"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="ItemName"
+			column="item_name"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="Type"
+			column="type"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="Memo"
+			column="memo"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

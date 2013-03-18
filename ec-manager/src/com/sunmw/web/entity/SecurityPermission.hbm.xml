@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.sunmw.web.entity">
+	<class
+		name="SecurityPermission"
+		table="security_permission"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="string"
+			column="PERMISSION_ID"
+		>
+			<generator class="assigned"/>
+		</id>
+		<property
+			name="PermissionType"
+			column="permission_type"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="ParentPermissionId"
+			column="parent_permission_id"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="Description"
+			column="description"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="DispIndex"
+			column="disp_index"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Cuser"
+			column="cuser"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Muser"
+			column="muser"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

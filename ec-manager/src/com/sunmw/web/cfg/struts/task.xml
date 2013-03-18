@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="task" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>
+		<!-- 接口定义页面 -->
+		<action name="viewIfDefine" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/task/ifDefineTree.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 接口查询 -->
+		<action name="ifDefineSearch" class="ifDefineSearchAction"
+			method="ifDefineSearch">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>		
+	 	<!-- 接口列表 -->
+	 	<action name="ifDefineTreeList" class="ifDefineProcessAction" method="ifDefineTreeList">   
+	      	<result type="json">
+		      <param name="root">ifDefineTreeMap</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+		<!-- 接口保存 -->
+		<action name="ifDefineSave" class="ifDefineProcessAction"
+			method="saveIfDefine">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 接口删除 -->
+		<action name="ifDefineDelete" class="ifDefineProcessAction"
+			method="deleteIfDefine">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 退货状态列表 -->
+		<action name="ifDefineList" class="ifDefineProcessAction"
+			method="ifDefineList">
+			<result type="json">
+		      <param name="root">ifDefineList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 任务定义页面 -->
+		<action name="viewTaskDefine" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/task/taskDefineSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 任务查询 -->
+		<action name="taskDefineSearch" class="taskDefineSearchAction"
+			method="taskDefineSearch">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 任务保存 -->
+		<action name="taskDefineSave" class="taskDefineProcessAction"
+			method="saveTaskDefine">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 任务删除 -->
+		<action name="taskDefineDelete" class="taskDefineProcessAction"
+			method="deleteTaskDefine">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>		
+		<!-- 任务执行 -->
+		<action name="nowExecTask" class="taskDefineProcessAction"
+			method="nowExecTask">
+			<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 文件上传页面 -->
+		<action name="viewTaskFileUpload" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/task/taskFileUpload.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 任务日志页面 -->
+		<action name="viewTaskLog" class="loginAction"
+			method="noAction">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/task/taskLogSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 任务日志查询 -->
+		<action name="taskLogSearch" class="taskLogSearchAction"
+			method="taskLogSearch">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.sunmw.taobao.entity">
+    <class name="TbTrade" table="tb_trade">
+        <meta attribute="sync-DAO">false</meta>
+        <id name="Id" type="integer" column="local_id"> 
+            <generator class="identity" />
+        </id>
+        <property name="IsUpdateFinished" column="is_update_finished" type="boolean" not-null="false" />
+        <property name="EndTime" column="end_time" type="timestamp" not-null="false" />
+        <property name="SellerNick" column="seller_nick" type="string" not-null="false" length="32" />
+        <property name="BuyerNick" column="buyer_nick" type="string" not-null="false" length="50" />
+        <property name="Title" column="title" type="string" not-null="false" length="64" />
+        <property name="Type" column="type" type="string" not-null="false" length="50" />
+        <property name="Created" column="created" type="timestamp" not-null="false" />
+        <property name="Iid" column="iid" type="string" not-null="false" length="32" />
+        <property name="Price" column="price" type="big_decimal" not-null="false" length="18" />
+        <property name="PicPath" column="pic_path" type="string" not-null="false" length="256" />
+        <property name="Num" column="num" type="big_decimal" not-null="false" length="18" />
+        <property name="Tid" column="tid" type="big_decimal" not-null="false" length="18" />
+        <property name="BuyerMessage" column="buyer_message" type="string" not-null="false" length="1024" />
+        <property name="ShippingType" column="shipping_type" type="string" not-null="false" length="32" />
+        <property name="AlipayNo" column="alipay_no" type="string" not-null="false" length="50" />
+        <property name="Payment" column="payment" type="big_decimal" not-null="false" length="18" />
+        <property name="DiscountFee" column="discount_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="AdjustFee" column="adjust_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="SnapshotUrl" column="snapshot_url" type="string" not-null="false" length="256" />
+        <property name="Snapshot" column="snapshot" type="string" not-null="false" length="256" />
+        <property name="Status" column="status" type="string" not-null="false" length="50" />
+        <property name="SellerRate" column="seller_rate" type="boolean" not-null="false" />
+        <property name="BuyerRate" column="buyer_rate" type="boolean" not-null="false" />
+        <property name="BuyerMemo" column="buyer_memo" type="string" not-null="false" length="1024" />
+        <property name="SellerMemo" column="seller_memo" type="string" not-null="false" length="1024" />
+        <property name="TradeMemo" column="trade_memo" type="string" not-null="false" length="1024" />
+        <property name="PayTime" column="pay_time" type="timestamp" not-null="false" />
+        <property name="Modified" column="modified" type="timestamp" not-null="false" />
+        <property name="BuyerObtainPointFee" column="buyer_obtain_point_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="PointFee" column="point_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="RealPointFee" column="real_point_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="TotalFee" column="total_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="PostFee" column="post_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="BuyerAlipayNo" column="buyer_alipay_no" type="string" not-null="false" length="64" />
+        <property name="ReceiverName" column="receiver_name" type="string" not-null="false" length="256" />
+        <property name="ReceiverState" column="receiver_state" type="string" not-null="false" length="256" />
+        <property name="ReceiverCity" column="receiver_city" type="string" not-null="false" length="256" />
+        <property name="ReceiverDistrict" column="receiver_district" type="string" not-null="false" length="256" />
+        <property name="ReceiverAddress" column="receiver_address" type="string" not-null="false" length="256" />
+        <property name="ReceiverZip" column="receiver_zip" type="string" not-null="false" length="32" />
+        <property name="ReceiverMobile" column="receiver_mobile" type="string" not-null="false" length="100" />
+        <property name="ReceiverPhone" column="receiver_phone" type="string" not-null="false" length="100" />
+        <property name="ConsignTime" column="consign_time" type="timestamp" not-null="false" />
+        <property name="BuyerEmail" column="buyer_email" type="string" not-null="false" length="256" />
+        <property name="CommissionFee" column="commission_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="SellerAlipayNo" column="seller_alipay_no" type="string" not-null="false" length="256" />
+        <property name="SellerMobile" column="seller_mobile" type="string" not-null="false" length="50" />
+        <property name="SellerPhone" column="seller_phone" type="string" not-null="false" length="50" />
+        <property name="SellerName" column="seller_name" type="string" not-null="false" length="32" />
+        <property name="SellerEmail" column="seller_email" type="string" not-null="false" length="256" />
+        <property name="AvailableConfirmFee" column="available_confirm_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="HasPostFee" column="has_post_fee" type="boolean" not-null="false" />
+        <property name="ReceivedPayment" column="received_payment" type="big_decimal" not-null="false" length="18" />
+        <property name="CodFee" column="cod_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="CodStatus" column="cod_status" type="string" not-null="false" length="32" />
+        <property name="TimeoutActionTime" column="timeout_action_time" type="timestamp" not-null="false" />
+        <property name="Is3d" column="is_3D" type="boolean" not-null="false" />
+        <property name="BuyerFlag" column="buyer_flag" type="integer" not-null="false" length="10" />
+        <property name="SellerFlag" column="seller_flag" type="integer" not-null="false" length="10" />
+        <property name="NumIid" column="num_iid" type="big_decimal" not-null="false" length="18" />
+        <property name="Promotion" column="promotion" type="string" not-null="false" length="256" />
+        <property name="InvoiceName" column="invoice_name" type="string" not-null="false" length="256" />
+        <property name="TradeFrom" column="trade_from" type="string" not-null="false" length="16" />
+        <property name="AlipayUrl" column="alipay_url" type="string" not-null="false" length="256" />
+        <property name="HasYfx" column="has_yfx" type="boolean" not-null="false"/>
+        <property name="YfxFee" column="yfx_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="YfxId" column="yfx_id" type="string" not-null="false" length="60" />
+        <property name="YfxType" column="yfx_type" type="integer" not-null="false" length="10" />
+        <property name="CreditCardFee" column="credit_card_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="NutFeature" column="nut_feature" type="string" not-null="false" length="256" />
+        <property name="StepTradeStatus" column="step_trade_status" type="string" not-null="false" length="20" />
+        <property name="StepPaidFee" column="step_paid_fee" type="big_decimal" not-null="false" length="18" />
+        <property name="MarkDesc" column="mark_desc" type="string" not-null="false" length="256" />
+        <property name="EticketExt" column="eticket_ext" type="big_decimal" not-null="false" length="18" />
+        <property name="SendTime" column="send_time" type="timestamp" not-null="false" />
+        <property name="StoreId" column="store_id" type="integer" not-null="false" length="10" />
+        <property name="UpdateTime" column="update_time" type="timestamp" not-null="false" />
+        <property name="UpdateFlag" column="update_flag" type="string" not-null="false" length="10" />
+    </class>
+</hibernate-mapping>

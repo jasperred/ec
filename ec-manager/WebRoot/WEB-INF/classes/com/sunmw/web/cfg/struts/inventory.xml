@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="inventory" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="login" type="redirect">viewLogin.action</result>
+		</global-results>
+		<!-- 库存查询界面 -->
+		<action name="viewInventorySearchAction" class="inventorySearchAction"
+			method="viewInventorySearch">
+			<result name="success" type="dispatcher">
+				<param name="location">application/inventory/inventorySearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 库存查询 -->
+		<action name="inventorySearchAction" class="inventorySearchAction"
+			method="inventorySearch">
+			<result name="success" type="dispatcher">
+				<param name="location">application/inventory/inventoryResult.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 库存导出 -->
+		<action name="inventoryExportAction" class="inventorySearchAction"
+			method="exportInventory">
+			<result name="success" type="dispatcher">
+				<param name="location">application/common/export.jsp</param>
+			</result>
+			<result name="error" type="dispatcher">
+				<param name="location">application/common/export.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 仓库列表 -->
+		<action name="warehouseListAction" class="warehouseListAction"
+			method="warehouseList">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 入库查询界面 -->
+		<action name="viewInventoryInSearchAction" class="inventoryInSearchAction"
+			method="viewInventoryInSearch">
+			<result name="success" type="dispatcher">
+				<param name="location">application/in/inventoryInSearch.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 入库查询 -->
+		<action name="inventoryInSearchAction" class="inventoryInSearchAction"
+			method="inventoryInSearch">
+			<result name="success" type="dispatcher">
+				<param name="location">application/in/inventoryInResult.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 状态 -->
+		<action name="baseStatusAction" class="statusAction"
+			method="statusListByType">
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 入库导出 -->
+		<action name="inventoryInExportAction" class="inventorySearchAction"
+			method="exportInventoryIn">
+			<result name="success" type="dispatcher">
+				<param name="location">application/common/export.jsp</param>
+			</result>
+			<result name="error" type="dispatcher">
+				<param name="location">application/common/export.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 入库信息界面 -->
+		<action name="viewInventoryInInfoAction" class="loginAction"
+			method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">application/in/inInfo.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 入库明细查询 -->
+		<action name="inventoryInItemSearchAction" class="inventoryInSearchAction"
+			method="inventoryInItemSearch">
+			<result type="json">  
+			    <param name="includeProperties">resultList.*,currentPage,rowCount,pageRow,pageCount</param>  
+			</result> 
+			<param name="noCache">true</param>  
+        	<param name="ignoreHierarchy">false</param> 
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

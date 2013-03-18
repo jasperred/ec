@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	<bean id="dataSourceForMybatis" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.url}base_framework?autoReconnect=true&amp;character-set=utf-8"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="idleConnectionTestPeriod" value="30"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="user"  value= "${jdbc.username}"  />         
+    	<property name="password"  value= "${jdbc.password}"  /> 
+	</bean>
+	<bean id="sessionFactoryForMybatis" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceForMybatis"/>
+	</bean>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sessionFactoryForMybatis" />
+	</bean>
+	<bean id="ifDefineMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.IfDefineMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForMybatis"/>
+	</bean>
+	<bean id="ifDefinePropMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.IfDefinePropMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForMybatis"/>
+	</bean>
+	<bean id="taskDefineMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.TaskDefineMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForMybatis"/>
+	</bean>
+	<bean id="taskQueueMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.TaskQueueMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForMybatis"/>
+	</bean>
+	<bean id="taskLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.TaskLogMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForMybatis"/>
+	</bean>
+	<bean id="jobConfigMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.JobConfigMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForMybatis"/>
+	</bean>
+	<!-- 报表查询 -->
+	<bean id="reportServicesMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.sunmw.web.dao.ReportServicesMapper"/>
+		<property name="sqlSessionFactory" ref="sessionFactoryForMybatis"/>
+	</bean>
+	
+	<bean id="taskDefineScheduledThreadPoolExecutor" class="java.util.concurrent.ScheduledThreadPoolExecutor">
+		<constructor-arg>
+		<value>100</value>
+		</constructor-arg>
+	</bean>
+	<bean id="taskQueueScheduledThreadPoolExecutor" class="java.util.concurrent.ScheduledThreadPoolExecutor">
+		<constructor-arg>
+		<value>100</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="taskScheduleServices" class="com.sunmw.web.bean.task.impl.TaskScheduleServicesImpl">
+		<property name="ifDefineMapper">
+			<ref bean="ifDefineMapper" />
+		</property>
+		<property name="ifDefinePropMapper">
+			<ref bean="ifDefinePropMapper" />
+		</property>
+		<property name="taskDefineMapper">
+			<ref bean="taskDefineMapper" />
+		</property>
+		<property name="taskQueueMapper">
+			<ref bean="taskQueueMapper" />
+		</property>
+		<property name="taskDefineScheduledThreadPoolExecutor">
+			<ref bean="taskDefineScheduledThreadPoolExecutor" />
+		</property>
+		<property name="taskQueueScheduledThreadPoolExecutor">
+			<ref bean="taskQueueScheduledThreadPoolExecutor" />
+		</property>
+	</bean>
+	<bean id="jobtask_jm"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject">
+			<ref bean="jobManager" />
+		</property>
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod">
+			<value>readTask</value>
+		</property>
+	</bean>
+
+	<!-- 任务读取 -->
+	<bean id="doTime_jm" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="jobtask_jm" />
+		</property>
+		<!-- cron表达式 此处定义为一直触发执行任务 -->
+		<property name="cronExpression">
+			<value>0 0/5 * * * ?</value>
+		</property>
+	</bean>
+	<bean id="startQuertz" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="doTime_jm" />
+			</list>
+		</property>
+	</bean>
+	<bean id="dataSourceForQuartz" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.url}quartz?autoReconnect=true&amp;character-set=utf-8"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="idleConnectionTestPeriod" value="30"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="user"  value= "${jdbc.username}"  />         
+    	<property name="password"  value= "${jdbc.password}"  />
+	</bean>
+	<bean name ="quartzScheduler" lazy-init="true" class ="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
+         <property name ="dataSource"  ref="dataSourceForQuartz" />
+         <property name ="applicationContextSchedulerContextKey" value="applicationContextKey" />
+         <property name ="configLocation" value="classpath:com/sunmw/web/cfg/quartz.properties" />
+     </bean >
+     <bean name ="schedulerServices" class ="com.sunmw.web.bean.task.impl.SchedulerServicesImpl" >
+         <property name ="quartzScheduler" ref="quartzScheduler" />
+     </bean >
+     <bean name ="jobManager" class ="com.sunmw.web.bean.task.impl.JobManagerImpl" >
+         <property name ="schedulerServices"  ref="schedulerServices" />
+         <property name ="jobConfigMapper"  ref="jobConfigMapper" />
+         <property name ="taskDefineMapper"  ref="taskDefineMapper" />
+     </bean >
+	
+</beans>

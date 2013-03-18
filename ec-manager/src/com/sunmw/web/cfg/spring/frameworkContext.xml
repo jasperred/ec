@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.url}base_framework?autoReconnect=true&amp;character-set=utf-8"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="idleConnectionTestPeriod" value="30"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="user"  value= "${jdbc.username}"  />         
+    	<property name="password"  value= "${jdbc.password}"  /> 
+	</bean>
+	<bean id="sessionFactoryERP"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>
+					classpath:com/sunmw/web/entity/
+				</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.connection.pool_size">10</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+				<prop key="hibernate.connection.autoReconnect">true</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 用户登录服务 -->
+	<bean id="loginServices" class="com.sunmw.web.bean.login.impl.SimpleLoginServices">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 用户登录 -->
+	<bean id="loginAction" class="com.sunmw.web.action.login.LoginAction" scope="request">
+		<property name="loginServices">
+			<ref bean="loginServices" />
+		</property>
+	</bean>	
+	<!-- 用户权限服务 -->
+	<bean id="securityPermissionServices"
+		class="com.sunmw.web.bean.login.impl.SecurityPermissionServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 用户权限-->
+	<bean id="userSecurityGroupAction" class="com.sunmw.web.action.login.UserSecurityGroupAction" scope="request">
+		<property name="securityPermissionServices">
+			<ref bean="securityPermissionServices" />
+		</property>
+	</bean>	
+	<!-- 验证码产生类 -->
+	<bean id="verifyRequestAction" class="com.sunmw.web.action.login.VerifyRequestAction" scope="request">		
+	</bean>
+	<!-- 用户菜单 -->
+	<bean id="menuAction" class="com.sunmw.web.action.login.MenuAction" scope="request">
+		<property name="securityPermissionServices">
+			<ref bean="securityPermissionServices" />
+		</property>
+	</bean>
+	<!-- 菜单服务类 -->
+	<bean id="moduleServices"
+		class="com.sunmw.web.bean.module.impl.ModuleServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 菜单操作类 -->
+	<bean id="moduleAction"
+		class="com.sunmw.web.action.module.ModuleAction" scope="request">
+		<property name="moduleServices">
+			<ref bean="moduleServices" />
+		</property>
+	</bean>
+	<!-- 用户管理 -->
+	<bean id="userServices" class="com.sunmw.web.bean.login.impl.UserServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 用户查询 -->
+	<bean id="userSearchAction"
+		class="com.sunmw.web.action.login.UserSearchAction" scope="request">
+		<property name="userServices">
+			<ref bean="userServices" />
+		</property>
+	</bean>
+	<!-- 用户保存 -->
+	<bean id="userInfoAction"
+		class="com.sunmw.web.action.login.UserInfoAction" scope="request">
+		<property name="userServices">
+			<ref bean="userServices" />
+		</property>
+	</bean>
+	
+	<!-- 公司管理 -->
+	<bean id="companyServices" class="com.sunmw.web.bean.company.impl.CompanyServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>
+	<!-- 公司查询 -->
+	<bean id="companySearchAction"
+		class="com.sunmw.web.action.company.CompanySearchAction" scope="request">
+		<property name="companyServices">
+			<ref bean="companyServices" />
+		</property>
+	</bean>
+	<!-- 公司保存 -->
+	<bean id="companyInfoAction"
+		class="com.sunmw.web.action.company.CompanyInfoAction" scope="request">
+		<property name="companyServices">
+			<ref bean="companyServices" />
+		</property>
+	</bean>
+	<!-- 权限组查询 -->
+	<bean id="securityGroupSearchAction"
+		class="com.sunmw.web.action.login.SecurityGroupSearchAction" scope="request">
+		<property name="securityPermissionServices">
+			<ref bean="securityPermissionServices" />
+		</property>
+	</bean>
+	<!-- 权限组保存 -->
+	<bean id="securityGroupInfoAction"
+		class="com.sunmw.web.action.login.SecurityGroupInfoAction" scope="request">
+		<property name="securityPermissionServices">
+			<ref bean="securityPermissionServices" />
+		</property>
+	</bean>
+	<!-- 店铺服务类 -->
+	<bean id="storeServices" class="com.sunmw.web.bean.store.impl.StoreServicesImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryERP" />
+		</property>
+	</bean>	
+	<!-- 店铺查询 -->
+	<bean id="storeSearchAction"
+		class="com.sunmw.web.action.store.StoreSearchAction" scope="request">
+		<property name="storeServices">
+			<ref bean="storeServices" />
+		</property>
+	</bean>
+	<!-- 店铺保存 -->
+	<bean id="storeInfoAction"
+		class="com.sunmw.web.action.store.StoreInfoAction" scope="request">
+		<property name="storeServices">
+			<ref bean="storeServices" />
+		</property>
+	</bean>
+</beans>
