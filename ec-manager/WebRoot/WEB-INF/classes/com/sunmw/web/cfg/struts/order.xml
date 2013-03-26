@@ -228,5 +228,13 @@
 		    </result>
 			<interceptor-ref name="AuthorityStack"></interceptor-ref>
 		</action>
+		<!-- 导出客户 -->
+		<action name="exportCustomer" class="customerSearchAction"
+			method="exportCustomer">
+			<result type="json">
+		      <param name="includeProperties">exportUrl</param>  
+		    </result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
 	</package>
 </struts>

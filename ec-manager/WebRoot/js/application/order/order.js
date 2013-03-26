@@ -522,7 +522,7 @@ Ext.onReady(function() {
 		for (i = 0; i < count; i++) {
 			var row = resultGrid.getStore().getAt(i);
 			if (row.get('check') && row.get('orderStatus') == 'START'
-					&& row.get('origOrderStatus') == 'WAIT_SELLER_SEND_GOODS') {
+					&& (row.get('origOrderStatus') == 'WAIT_SELLER_SEND_GOODS'||row.get('origOrderNo')==null)) {
 				if (orderHeadIds.length > 0)
 					orderHeadIds += ',';
 				orderHeadIds += row.get('orderHeadId');

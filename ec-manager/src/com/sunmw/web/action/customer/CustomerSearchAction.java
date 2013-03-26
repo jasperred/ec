@@ -12,6 +12,7 @@ import com.sunmw.web.bean.company.CompanyServices;
 import com.sunmw.web.bean.customer.CustomerServices;
 import com.sunmw.web.entity.Company;
 import com.sunmw.web.entity.UserLogin;
+import com.sunmw.web.util.WebConfigProperties;
 import com.sunmw.web.util.WebUtil;
 
 public class CustomerSearchAction {
@@ -26,6 +27,7 @@ public class CustomerSearchAction {
 	private java.lang.String birthDayEnd;
 	private java.lang.String email;
 	private java.lang.String sex;
+	private java.lang.String q;
 	
 	private int page = 1;// 当前页
 	private int rowCount;// 总行数
@@ -35,6 +37,8 @@ public class CustomerSearchAction {
 	private String isBack = "TRUE";// 是否有上一页
 	private int pageCount;// 页数	
 
+	private String exportUrl;// 导出文件的链接地址
+	private String message;
 	
 
 	public CustomerServices getCustomerServices() {
@@ -43,6 +47,14 @@ public class CustomerSearchAction {
 
 	public void setCustomerServices(CustomerServices customerServices) {
 		this.customerServices = customerServices;
+	}
+
+	public java.lang.String getQ() {
+		return q;
+	}
+
+	public void setQ(java.lang.String q) {
+		this.q = q;
 	}
 
 	public java.lang.String getCustNo() {
@@ -157,6 +169,22 @@ public class CustomerSearchAction {
 		this.pageCount = pageCount;
 	}
 
+	public String getExportUrl() {
+		return exportUrl;
+	}
+
+	public void setExportUrl(String exportUrl) {
+		this.exportUrl = exportUrl;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 	public String searchCustomer() {
 		try {
 			Map session = ActionContext.getContext().getSession();
@@ -182,6 +210,26 @@ public class CustomerSearchAction {
 		}
 		return "success";
 	}
+	
+	public String searchCustomerByQ() {
+		try {
+			Map session = ActionContext.getContext().getSession();
+			UserLogin ul = (UserLogin) session.get("LOGIN_INFO");
+			Map param = new HashMap();
+			param.put("UserLogin", ul);
+			param.put("q", q);
+			Map r = this.customerServices.searchCustomerByQ(param, page,
+					limit);
+			this.rowCount = (Integer) r.get("COUNT_ROW");
+			this.resultList = (List) r.get("RESULT");
+			countPage();
+		} catch (Exception e) {
+			if (this.resultList != null)
+				this.resultList.clear();
+			this.rowCount = 0;
+		}
+		return "success";
+	}
 
 	private void countPage() {
 		if (rowCount % this.limit == 0)
@@ -196,6 +244,47 @@ public class CustomerSearchAction {
 			isBack = "true";
 		else
 			isBack = "false";
+	}
+	// 导出客户
+	public String exportCustomer() {
+		this.exportUrl = null;
+		Map session = ActionContext.getContext().getSession();
+		UserLogin ul = (UserLogin) session.get("LOGIN_INFO");
+		Map param = new HashMap();
+		param.put("UserLogin", ul);
+		param.put("custNo", custNo);
+		param.put("birthDayFrom", birthDayFrom);
+		param.put("birthDayEnd", birthDayEnd);
+		param.put("custName", custName);
+		param.put("email", email);
+		param.put("mobile", mobile);
+		param.put("sex", sex);
+		Map r = this.customerServices.searchCustomer(param, page,
+				limit);
+		List l = (List) r.get("RESULT");
+		String[] headers = new String[] { "客户编号", "客户名称", "邮件", "手机", "性别",
+				"生日", "省", "市", "区", "地址","邮编" };
+		String[] fields = new String[] {"custNo", "custName", "email",
+				"mobile", "sex", "birthDay","province","city","district","address","zipcode"};
+		String fileName = "customer_export.csv";
+		String path = WebConfigProperties.getProperties("file.export.path");
+		if(WebUtil.isNotNull(ul.getCompanyId()))
+		{
+			path = path + ul.getCompanyId()+"/";
+		}
+		boolean b = WebUtil.exportCSV(headers, fields, l, path, fileName);
+		if (b) {
+			String url = WebConfigProperties.getProperties("file.export.url");
+
+			if(WebUtil.isNotNull(ul.getCompanyId()))
+			{
+				url = url + ul.getCompanyId()+"/";
+			}
+			this.exportUrl = url + fileName;
+			message = "success";
+		}
+		message = "error";
+		return "success";
 	}
 
 }

@@ -1,0 +1,10 @@
+[
+    {
+        "moduleId": "NewCustomer",
+        "moduleName": "新建会员"
+    },
+    {
+        "moduleId": "SearchCustomer",
+        "moduleName": "查询会员"
+    }
+]

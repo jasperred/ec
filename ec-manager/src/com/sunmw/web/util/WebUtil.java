@@ -201,7 +201,10 @@ public class WebUtil {
 	}
 	public static boolean exportCSV(String[] headers,String[] fields,List<Map> l,String path,String fileName)
 	{
-		return exportCSV( headers, fields, l, path, fileName,"UTF-8");
+		String encode = WebConfigProperties.getProperties("system.file.encode");
+		if(encode==null)
+			encode = "UTF-8";
+		return exportCSV( headers, fields, l, path, fileName,encode);
 	}
 	public static boolean exportCSV(String[] headers,String[] fields,List<Map> l,String path,String fileName,String encode)
 	{
@@ -266,7 +269,10 @@ public class WebUtil {
 	 */
 	public static List readerCsv(File file,boolean hasHeader)
 	{
-		return readerCsv(file,hasHeader,"UTF-8");
+		String encode = WebConfigProperties.getProperties("system.file.encode");
+		if(encode==null)
+			encode = "UTF-8";
+		return readerCsv(file,hasHeader,encode);
 	}
 	/**
 	 * 读取CSV文件

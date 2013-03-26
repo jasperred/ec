@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="mobile" extends="json-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login" type="redirect">mobilelogin</result>
+		</global-results>	
+	 	<!-- 移动 begin -->
+	 	<!-- 移动登录界面 -->
+		<action name="mobilelogin" class="loginAction" method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">/mobile/mobilelogin.jsp</param>
+			</result>
+			<result name="login" type="dispatcher">
+				<param name="location">/mobile/mobilelogin.jsp</param>
+			</result>
+		</action>	
+	 	<!-- 退出 -->
+		<action name="mobilelogout" class="loginAction" method="logout">
+			<result name="success" type="redirect">
+				<param name="location">index</param>
+			</result>
+		</action>		
+	 	<!-- 移动菜单界面 -->
+		<action name="mobilemenu" class="loginAction" method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">/mobile/menu.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>	
+	 	<!-- 新增会员 -->
+		<action name="mobileNewCustomer" class="loginAction" method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">/mobile/newCustomer.jsp</param>
+			</result>
+			<result name="login" type="dispatcher">
+				<param name="location">/mobile/mobilelogin.jsp</param>
+			</result>
+		</action>	
+	 	<!-- 查询会员 -->
+		<action name="mobileSearchCustomer" class="loginAction" method="index">
+			<result name="success" type="dispatcher">
+				<param name="location">/mobile/customerSearch.jsp</param>
+			</result>
+			<result name="login" type="dispatcher">
+				<param name="location">/mobile/mobilelogin.jsp</param>
+			</result>
+		</action>	
+		
+		<!-- 客户查询 -->
+		<action name="customerSearchByQ" class="customerSearchAction"
+			method="searchCustomerByQ">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<param name="noCache">true</param>  
+        	<param name="ignoreHierarchy">false</param> 
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	 	<!--移动 end -->
+	</package>
+</struts>

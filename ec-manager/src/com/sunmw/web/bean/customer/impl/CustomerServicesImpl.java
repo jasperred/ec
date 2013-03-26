@@ -173,6 +173,91 @@ public class CustomerServicesImpl extends HibernateDaoSupport implements Custome
 			}
 			
 			List<Customer> l = q.list();
+			List<Map> ll = new ArrayList(l.size());
+			for(Customer c:l)
+			{
+				Map m = new HashMap();
+				m.put("address", c.getAddress());
+				m.put("birthDay", c.getBirthDay());
+				m.put("city", c.getCity());
+				m.put("companyId", c.getCompanyId());
+				m.put("ctime", c.getCtime());
+				m.put("custName", c.getCustName());
+				m.put("custNo", c.getCustNo());
+				m.put("custNo1", c.getCustNo1());
+				m.put("district", c.getDistrict());
+				m.put("email", c.getEmail());
+				m.put("id", c.getId());
+				m.put("mobile", c.getMobile());
+				m.put("province", c.getProvince());
+				m.put("sex", c.getSex());
+				m.put("tel", c.getTel());
+				m.put("zipcode", c.getZipcode());
+				ll.add(m);
+			}
+			result.put("RESULT", ll);
+			result.put("COUNT_ROW", count);
+		} catch (HibernateException e) {
+			result.put("Flag", "ERROR");
+			result.put("Message", e.getMessage());
+			logger.error(e.getMessage());
+		} catch (RuntimeException e) {
+			result.put("Flag", "ERROR");
+			result.put("Message", e.getMessage());
+			logger.error(e.getMessage());
+		} finally {
+			if (session != null && session.isOpen())
+				session.close();
+		}
+		return result;
+	}
+	@Override
+	public Map searchCustomerByQ(Map param, int currentPage, int pageRow) {
+		StringBuffer hql = new StringBuffer();
+		UserLogin ul = (UserLogin) param.get("UserLogin");
+		hql
+				.append("from Customer c");
+		StringBuffer con = new StringBuffer();
+		// 分公司权限判断
+		if (WebUtil.isNull(ul.getUserType())
+				|| !ul.getUserType().equals("SYSTEM")) {
+			if (con.length() > 0)
+				con.append(" and ");
+			con.append(" c.CompanyId = " + ul.getCompanyId());
+		}
+		List conList = new ArrayList();
+		if (!WebUtil.isNull(param.get("q"))) {
+			con.append(" c.CustNo like :Condition0 or c.CustName like :Condition1 or c.Mobile like :Condition2");
+			conList.add("%"+param.get("q").toString()+"%");
+			conList.add("%"+param.get("q").toString()+"%");
+			conList.add("%"+param.get("q").toString()+"%");
+		}
+		
+		if (con.length() > 0)
+			hql.append(" where " + con.toString());
+		hql.append(" order by c.Ctime desc");
+
+		Session session = this.getSession();
+		Map result = new HashMap();
+		try {
+			Query q1 = session.createQuery("select count(*) " + hql.toString());
+			// 查询条件
+			for (int i = 0; i < conList.size(); i++) {
+				q1.setParameter("Condition" + i, conList.get(i));
+			}
+			List<Long> countList = q1.list();
+			int count = countList.get(0).intValue();
+			Query q = session.createQuery(hql.toString());
+			// 查询条件
+			for (int i = 0; i < conList.size(); i++) {
+				q.setParameter("Condition" + i, conList.get(i));
+			}
+			if (pageRow > 0) {
+				q.setFirstResult((currentPage - 1) * pageRow);
+				q.setMaxResults(pageRow);
+			}
+			
+			List<Customer> l = q.list();
 			result.put("RESULT", l);
 			result.put("COUNT_ROW", count);
 		} catch (HibernateException e) {

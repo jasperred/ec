@@ -113,6 +113,9 @@ Ext.onReady(function() {
 							handler : function() {
 								searchPanel.getForm().reset();
 							}
+						}, {
+							text : "导出CSV",
+							handler : exportHandler
 						}],
 				renderTo : 'search-panel'
 			});
@@ -559,5 +562,34 @@ Ext.onReady(function() {
 			initCity('info-province', 'info-city', 'info-district');
 		}
 		winInfo.show();
+	}
+	// 导出CSV
+	function exportHandler() {
+		Ext.Msg.wait('处理中，请稍后...', '提示');
+		Ext.Ajax.request({
+					url : 'exportCustomer',
+					params : {
+						limit : 100000,
+						custNo : Ext.getCmp("s-cust-no").getValue(),
+						custName : Ext.getCmp("s-cust-name").getValue(),
+						email : Ext.getCmp("s-email").getValue(),
+						mobile : Ext.getCmp("s-mobile").getValue(),
+						sex : Ext.getCmp("s-sex").getValue(),
+						birthDayFrom : Ext.getCmp("s-birth-day-from")
+								.getRawValue(),
+						birthDayEnd : Ext.getCmp("s-birth-day-end").getRawValue()
+					},
+					success : function(response, options) {
+						Ext.Msg.hide();
+						var text = unicodeToString(response.responseText);
+						var responseArray = Ext.JSON.decode(text);
+						if (Ext.String.trim(responseArray.exportUrl).length > 0) {
+							window.open(Ext.String
+									.trim(responseArray.exportUrl));
+						} else {
+							Ext.MessageBox.alert("提示", "无导出文件");
+						}
+					}
+				});
 	}
 });

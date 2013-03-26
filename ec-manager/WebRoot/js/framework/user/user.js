@@ -88,7 +88,7 @@ Ext.onReady(function() {
 			});
 	// 查询结果grid
 
-	var gridHeight = getWindownHeight()-searchPanel.getHeight( );
+	var gridHeight = getWindownHeight() - searchPanel.getHeight();
 	Ext.define('SearchModel', {
 				extend : 'Ext.data.Model',
 				fields : ['UserNo', 'Email', 'UserName', 'Enabled', {
@@ -370,8 +370,7 @@ Ext.onReady(function() {
 									allowBlank : false,
 									queryMode : 'local',
 									editable : false,
-									name : "enabled",
-									id : "enabled"
+									name : "enabled"
 								})],
 
 				buttons : [{
@@ -427,16 +426,15 @@ Ext.onReady(function() {
 						var text = unicodeToString(response.responseText);
 						var responseArray = Ext.JSON.decode(text);
 						if (responseArray.userNo) {
-							//非管理员不能更改用户的公司
-							if(responseArray.userType==null||responseArray.userType!='SYSTEM')
-							{
-								Ext.getCmp('form-company-id').setDisabled(true);								
+							// 非管理员不能更改用户的公司
+							if (responseArray.userType == null
+									|| responseArray.userType != 'SYSTEM') {
+								Ext.getCmp('form-company-id').setDisabled(true);
 								Ext.getCmp('form-company-id')
-									.setValue(responseArray.companyId);
-							}
-							else
-							{
-								Ext.getCmp('form-company-id').setDisabled(false);
+										.setValue(responseArray.companyId);
+							} else {
+								Ext.getCmp('form-company-id')
+										.setDisabled(false);
 							}
 						} else {
 							Ext.MessageBox.alert("错误", "用户信息没找到");
@@ -565,13 +563,11 @@ Ext.onReady(function() {
 						var text = unicodeToString(response.responseText);
 						var responseArray = Ext.JSON.decode(text);
 						if (responseArray.userNo) {
-							//非管理员不能更改用户的公司
-							if(responseArray.userType==null||responseArray.userType!='SYSTEM')
-							{
+							// 非管理员不能更改用户的公司
+							if (responseArray.userType == null
+									|| responseArray.userType != 'SYSTEM') {
 								Ext.getCmp('new-company-id').setDisabled(true);
-							}
-							else
-							{
+							} else {
 								Ext.getCmp('new-company-id').setDisabled(false);
 							}
 							Ext.getCmp('new-user-id')
@@ -672,8 +668,6 @@ Ext.onReady(function() {
 							}
 						}]
 			});
-			Ext.getCmp('ps-user-id').setValue(userId);
-			Ext.getCmp('ps-user-no').setValue(userNo);
 			psWin = Ext.widget('window', {
 						title : '修改密码',
 						closeAction : 'hide',
@@ -685,10 +679,11 @@ Ext.onReady(function() {
 						items : form
 					});
 		}
+		Ext.getCmp('ps-user-id').setValue(userId);
+		Ext.getCmp('ps-user-no').setValue(userNo);
 		psWin.show();
 	}
-	function securityGroupHandler()
-	{
+	function securityGroupHandler() {
 		var row = resultGrid.getSelectionModel().getSelection()[0];
 		if (!row) {
 
@@ -722,15 +717,15 @@ Ext.onReady(function() {
 					url : 'securityGroupList'
 				}
 			});
-	//刷新tree，不能直接通过store.load()，要先删除结点
+	// 刷新tree，不能直接通过store.load()，要先删除结点
 	function refreshTree() {
-		var delNode;  
-  		var tree = Ext.getCmp("sp-tree");
-		while (delNode = tree.getRootNode().childNodes[0]) {  
-		    tree.getRootNode().removeChild(delNode);  
-		}  
-		  
-		tree.store.load(); 
+		var delNode;
+		var tree = Ext.getCmp("sp-tree");
+		while (delNode = tree.getRootNode().childNodes[0]) {
+			tree.getRootNode().removeChild(delNode);
+		}
+
+		tree.store.load();
 	}
 	// 修改用户信息窗口
 	var sgWin;
@@ -754,14 +749,14 @@ Ext.onReady(function() {
 							allowBlank : false,
 							name : 'userId',
 							id : 'sg-user-id'
-						},Ext.create('Ext.tree.Panel', {
-							store : spstore,
-							region : 'center',
-							expanded : true,
-							rootVisible : false,
-							id : 'sp-tree',
-							frame : false
-						})],
+						}, Ext.create('Ext.tree.Panel', {
+									store : spstore,
+									region : 'center',
+									expanded : true,
+									rootVisible : false,
+									id : 'sp-tree',
+									frame : false
+								})],
 
 				buttons : [{
 							text : '取消',
@@ -789,7 +784,8 @@ Ext.onReady(function() {
 									url : 'saveUserSecurityGroup',
 									params : {
 										crumb : Ext.get('crumb').getValue(),
-										userId : Ext.getCmp("sg-user-id").getValue(),
+										userId : Ext.getCmp("sg-user-id")
+												.getValue(),
 										groupIds : pids
 									},
 									success : function(response, options) {

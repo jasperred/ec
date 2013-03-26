@@ -156,7 +156,21 @@
 		      <param name="includeProperties">success,message</param>  
 		   	</result>
 			<interceptor-ref name="AuthorityStack"></interceptor-ref>
-	 	</action>	 	
+	 	</action>	
+	 	<!-- 密码修改界面 -->
+	 	<action name="viewModifyPassword" class="loginAction" method="noAction">   
+	      	<result name="success" type="dispatcher">
+				<param name="location">/framework/user/passwordModify.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action> 	
+	 	<!-- 修改密码（当前用户） -->
+	 	<action name="modifyPasswordByUser" class="userInfoAction" method="modifyPasswordByUser">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>	
 	 	<!-- 安全组界面 -->
 	 	<action name="viewSecurityGroup" class="loginAction" method="noAction">   
 	      	<result name="success" type="dispatcher">
@@ -309,49 +323,5 @@
 			<interceptor-ref name="AuthorityStack"></interceptor-ref>
 	 	</action>
 	 	
-	 	<!-- 移动 begin -->
-	 	<!-- 移动登录界面 -->
-		<action name="mobilelogin" class="loginAction" method="index">
-			<result name="success" type="dispatcher">
-				<param name="location">/mobile/mobilelogin.jsp</param>
-			</result>
-			<result name="login" type="dispatcher">
-				<param name="location">/mobile/mobilelogin.jsp</param>
-			</result>
-		</action>	
-	 	<!-- 退出 -->
-		<action name="mobilelogout" class="loginAction" method="logout">
-			<result name="success" type="redirect">
-				<param name="location">index</param>
-			</result>
-		</action>	
-	 	<!-- 移动菜单界面 -->
-		<action name="mobilemenu" class="loginAction" method="index">
-			<result name="success" type="dispatcher">
-				<param name="location">/mobile/mobilemenu.jsp</param>
-			</result>
-			<result name="login" type="dispatcher">
-				<param name="location">/mobile/mobilelogin.jsp</param>
-			</result>
-		</action>	
-	 	<!-- 新增会员 -->
-		<action name="mobileNewCustomer" class="loginAction" method="index">
-			<result name="success" type="dispatcher">
-				<param name="location">/mobile/newCustomer.jsp</param>
-			</result>
-			<result name="login" type="dispatcher">
-				<param name="location">/mobile/mobilelogin.jsp</param>
-			</result>
-		</action>	
-	 	<!-- 查询会员 -->
-		<action name="mobileSearchCustomer" class="loginAction" method="index">
-			<result name="success" type="dispatcher">
-				<param name="location">/mobile/customerSearch.jsp</param>
-			</result>
-			<result name="login" type="dispatcher">
-				<param name="location">/mobile/mobilelogin.jsp</param>
-			</result>
-		</action>	
-	 	<!--移动 end -->
 	</package>
 </struts>

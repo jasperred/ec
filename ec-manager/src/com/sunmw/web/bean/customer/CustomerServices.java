@@ -37,5 +37,13 @@ public interface CustomerServices {
 	 * @return
 	 */
 	public Map searchCustomer(Map param, int currentPage, int pageRow);
+	/**
+	 * 查询客户
+	 * @param param
+	 * @param currentPage
+	 * @param pageRow
+	 * @return
+	 */
+	public Map searchCustomerByQ(Map param, int currentPage, int pageRow);
 
 }

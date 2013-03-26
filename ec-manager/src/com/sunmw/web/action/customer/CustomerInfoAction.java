@@ -268,6 +268,8 @@ public class CustomerInfoAction {
 			param.put("UserLogin", ul);
 			param.put("custNo", custNo);
 			param.put("address", address);
+			if(birthDay!=null&&birthDay.length()>10)
+				birthDay = birthDay.substring(0,10);
 			param.put("birthDay", birthDay);
 			param.put("city", city);
 			param.put("custName", custName);

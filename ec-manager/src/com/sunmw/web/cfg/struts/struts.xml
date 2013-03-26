@@ -38,6 +38,12 @@
 				<param name="location">/demo/tabs/tab-scroller-menu.html</param>
 			</result>
 		</action>
+		<action name="mobiledemo" class="com.sunmw.web.demo.demo"
+			method="demo1">
+			<result name="success" type="dispatcher">
+				<param name="location">/mobile/testmobilelogin.jsp</param>
+			</result>
+		</action>
 	</package>  
 	<include file="com/sunmw/web/cfg/struts/common.xml"></include>
 	<include file="com/sunmw/web/cfg/struts/framework.xml"></include>
@@ -49,4 +55,5 @@
 	<include file="com/sunmw/web/cfg/struts/fileupload.xml"></include>
 	<include file="com/sunmw/web/cfg/struts/financial.xml"></include>
 	<include file="com/sunmw/web/cfg/struts/warehouse.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/mobile.xml"></include>
 </struts>

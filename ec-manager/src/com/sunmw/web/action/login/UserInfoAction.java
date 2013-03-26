@@ -259,6 +259,8 @@ public class UserInfoAction {
 			m.put("UserName", WebUtil.filterSpecialCharacters(userName));
 			m.put("Email", WebUtil.filterSpecialCharacters(email));
 			m.put("UserNo", WebUtil.filterSpecialCharacters(userNo));
+			//公司ID大于0有效
+			if(companyId>0)
 			m.put("CompanyId", companyId);
 			if (WebUtil.isNotNull(enabled))
 				m.put("Enabled", WebUtil
@@ -273,6 +275,7 @@ public class UserInfoAction {
 				success = false;
 				return "success";
 			}
+			m.put("UserLogin", ul);
 			Map<String, String> r = userServices.createUserLogin(m);
 			String flag = r.get("FLAG");
 			if (flag.equals("SUCCESS")) {

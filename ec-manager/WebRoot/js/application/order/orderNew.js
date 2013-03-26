@@ -410,25 +410,245 @@ Ext.onReady(function() {
 		searchPanel.getForm().reset();
 	}
 	// Item查询界面
+	var winItemNew;
+	var itemStore;
 	function itemView() {
-		Ext.Ajax.request({
-					url : 'itemSkuSearch',
-					params : {
-						barcode : '123'
-					},
-					success : function(response, options) {
-						var text = unicodeToString(response.responseText);
-						var responseArray = Ext.JSON.decode(text);
-						if (responseArray.success) {
-							Ext.MessageBox.alert('提示', "处理成功!");
-							Ext.getCmp('search-panel').getForm().reset();
-							Ext.getCmp('result-grid').getStore().removeAll();
+		if (winItemNew == undefined) {
+			var itemsearch = Ext.create('Ext.form.Panel', {
+						title : "会员查询",
+						id : "item-search",
+						region : 'north',
+						frame : true, // 设置窗体为圆角
+						method : "POST",
+						bodyPadding : 10,
+						layout : {
+							type : 'table',
+							columns : '2',
+							align : 'center'
+						},
+						defaultType : 'textfield',
+						fieldDefaults : {
+							msgTarget : 'side',
+							labelAlign : 'left'
+						},
+						items : [{
+									xtype : 'textfield',
+									fieldLabel : '商品编码',
+									margin : '5 5 5 10',
+									name : 'itemCd',
+									id : "s-item-cd"
+								}, {
+									xtype : 'textfield',
+									fieldLabel : 'SKU编码',
+									name : 'skuCd',
+									margin : '5 5 5 10',
+									id : "s-sku-cd"
+								}, {
+									xtype : 'textfield',
+									fieldLabel : '商品名称',
+									name : 'itemName',
+									margin : '5 5 5 10',
+									id : "s-item-name"
+								}, {
+									xtype : 'fieldcontainer',
+									fieldLabel : '商品价格',
+									combineErrors : true,
+									msgTarget : 'side',
+									colspan : 3,
+									layout : 'hbox',
+									width : 380,
+									margin : "5 5 5 10",
+									defaults : {
+										flex : 1,
+										hideLabel : true
+									},
+									items : [{
+												xtype : 'numberfield',
+												name : 'fromPrice',
+												id : 's-from-price',
+												fieldLabel : '',
+												margin : '0 5 0 0'
+											}, {
+												xtype : 'numberfield',
+												name : 'endPrice',
+												id : 's-end-price',
+												fieldLabel : '-'
+											}]
+								}],
+						buttons : [{
+									text : "查询",
+									handler : searchItem
+								}, {
+									text : "返回",
+									handler : function() {
+										itemsearch.getForm().reset();
+										itemdetail.getStore().removeAll();
+										winItemNew.hide();
+									}
+								}]
+					});
+			Ext.define('ItemSearchModel', {
+						extend : 'Ext.data.Model',
+						fields : ["ItemCd", "SkuCd", "ItemName", "SkuProp1",
+								"SkuProp2", "SkuProp3", "SkuPrice1"],
+						idProperty : 'SkuCd'
+					});
+			itemStore = Ext.create('Ext.data.Store', {
+						model : 'ItemSearchModel',
+						remoteSort : true,
+						pageSize : pageSize,
+						proxy : new Ext.data.HttpProxy({
+									// load using script tags for cross domain,
+									// if the
+									// data in on the same domain as
+									// this page, an HttpProxy would be better
+									type : 'jsonp',
+									url : 'skuSearchAction',
+									reader : {
+										root : 'resultList',
+										totalProperty : 'rowCount',
+										fields : ["ItemCd", "SkuCd",
+												"ItemName", "SkuProp1",
+												"SkuProp2", "SkuProp3",
+												"SkuPrice1"]
+									},
+									// sends single sort as multi parameter
+									simpleSortMode : true
+								}),
+						sorters : [{
+									property : 'SkuCd',
+									direction : 'ASC'
+								}]
+					});
+			var itemdetail = Ext.create('Ext.grid.Panel', {
+						title : "会员列表",
+						id : "item-detail",
+						height : 360,
+						store : itemStore,
+						disableSelection : false,
+						loadMask : true,
+						multiSelect : false,
+						itemSelector : '.feed-list-item',
+						overItemCls : 'feed-list-item-hover',
+						viewConfig : {
+							id : 'gv',
+							trackOver : false,
+							stripeRows : false,
+							plugins : [{
+										ptype : 'preview',
+										bodyField : 'excerpt',
+										expanded : true,
+										pluginId : 'preview'
+									}]
+						},
+						columns : [{
+									xtype : 'rownumberer'
+								}, {
+									header : "商品编码",
+									dataIndex : 'ItemCd',
+									editor : {
+										xtype : 'textfield'
+									},
+									width : 80,
+									sortable : false
+								}, {
+									header : "SKU编码",
+									dataIndex : 'SkuCd',
+									editor : {
+										xtype : 'textfield'
+									},
+									width : 100,
+									sortable : true
+								}, {
+									header : "商品名称",
+									dataIndex : 'ItemName',
+									editor : {
+										xtype : 'textfield'
+									},
+									width : 300,
+									flex : 1,
+									sortable : true
+								}, {
+									header : "属性1",
+									dataIndex : 'SkuProp1',
+									width : 80,
+									align : 'right',
+									sortable : true
+								}, {
+									header : "属性2",
+									dataIndex : 'SkuProp2',
+									width : 80,
+									sortable : true
+								}, {
+									header : "属性3",
+									dataIndex : 'SkuProp3',
+									width : 80,
+									sortable : true
+								}, {
+									header : "价格",
+									dataIndex : 'SkuPrice1',
+									width : 80,
+									sortable : true
+								}],
+						bbar : Ext.create('Ext.PagingToolbar', {
+									store : store,
+									displayInfo : true,
+									displayMsg : '显示 {0} - {1}/共{2}条',
+									emptyMsg : "没有查询结果"
+								})
+					});
+			itemdetail.child('pagingtoolbar').add(['->', {
+						iconCls : 'icon-add',
+						text : '选择',
+						scope : this,
+						handler : selectItem
+					}]);
 
-						} else {
-							Ext.MessageBox.alert("错误", responseArray.message);
-						}
-					}
+			itemdetail.addListener('itemdblclick', selectItem, this);
+			winItemNew = Ext.widget('window', {
+						title : '商品信息',
+						closeAction : 'hide',
+						width : 900,
+						height : 600,
+						x : 0,
+						y : 0,
+						layout : 'anchor',
+						resizable : true,
+						modal : true,
+						items : [itemsearch, itemdetail]
+					});
+		}
+		winItemNew.show();
+	}
+
+	// 商品查询
+	function searchItem() {
+		itemStore.on('beforeload', function() { // =======翻页时 查询条件
+					var new_params = {
+						limit : pageSize,
+						itemCd : Ext.getCmp("s-item-cd").getValue(),
+						skuCd : Ext.getCmp("s-sku-cd").getValue(),
+						itemName : Ext.getCmp("s-item-name").getValue(),
+						fromPrice : Ext.getCmp("s-from-price").getValue(),
+						endPrice : Ext.getCmp("s-end-price").getValue()
+					};
+					Ext.apply(itemStore.proxy.extraParams, new_params);
 				});
+		itemStore.loadPage(1);
+	}
+	// 商品选择
+	function selectItem() {
+		var row = Ext.getCmp('item-detail').getSelectionModel().getSelection()[0];
+		if (!row) {
+			return;
+		}
+		var detail = [row.get('ItemCd'), row.get('SkuCd'), row.get('ItemName'),
+				row.get('SkuProp1'), row.get('SkuProp2'), row.get('SkuPrice1'),
+				1, 0, row.get('SkuPrice1')];
+		addOrderDetail(detail);
+		Ext.getCmp('item-search').getForm().reset();
+		Ext.getCmp('item-detail').getStore().removeAll();
+		winItemNew.hide();
 	}
 	// 增加Item
 	function addItem() {
@@ -632,15 +852,15 @@ Ext.onReady(function() {
 								}]
 					});
 			Ext.define('SearchModel', {
-						extend : 'Ext.data.Model',
-						fields : ['id', 'custNo', 'custName', 'email',
-								'mobile','tel', 'sex', {
-									name : 'birthDay',
-									type : 'date',
-									dateFormat : 'Y-m-d'
-								}, 'province', 'city', 'district', 'zipcode','address'],
-						idProperty : 'id'
-					});
+				extend : 'Ext.data.Model',
+				fields : ['id', 'custNo', 'custName', 'email', 'mobile', 'tel',
+						'sex', {
+							name : 'birthDay',
+							type : 'date',
+							dateFormat : 'Y-m-d'
+						}, 'province', 'city', 'district', 'zipcode', 'address'],
+				idProperty : 'id'
+			});
 			store = Ext.create('Ext.data.Store', {
 						model : 'SearchModel',
 						remoteSort : true,
@@ -656,9 +876,10 @@ Ext.onReady(function() {
 										root : 'resultList',
 										totalProperty : 'rowCount',
 										fields : ['id', 'custNo', 'custName',
-												'email', 'mobile','tel', 'sex',
-												'birthDay', 'province', 'city',
-												'district', 'zipcode','address']
+												'email', 'mobile', 'tel',
+												'sex', 'birthDay', 'province',
+												'city', 'district', 'zipcode',
+												'address']
 									},
 									// sends single sort as multi parameter
 									simpleSortMode : true
@@ -772,6 +993,7 @@ Ext.onReady(function() {
 						scope : this,
 						handler : selectCust
 					}]);
+			custdetail.addListener('itemdblclick', selectCust, this);
 			winNew = Ext.widget('window', {
 						title : '地址信息',
 						closeAction : 'hide',
