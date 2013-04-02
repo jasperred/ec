@@ -73,5 +73,12 @@
 			</result>
 			<interceptor-ref name="AuthorityStack"></interceptor-ref>
 		</action>
+		<action name="viewCustomerReportAction" class="reportAction"
+			method="viewReport">
+			<result name="success" type="dispatcher">
+				<param name="location">/application/report/customerReport.jsp</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
 	</package>
 </struts>

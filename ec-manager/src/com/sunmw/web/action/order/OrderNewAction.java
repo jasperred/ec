@@ -279,6 +279,7 @@ public class OrderNewAction {
 //		address.put("LOGIN_INFO", ul);
 //		addressServices.saveAddress(address);
 		//订单保存
+		param.put("CompanyId", ul.getCompanyId());
 		param.put("StoreId", new Integer(this.shopId));
 		param.put("SellerNick", this.shopName);
 		param.put("PayTime", new Date());

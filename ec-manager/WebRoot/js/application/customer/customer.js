@@ -113,10 +113,13 @@ Ext.onReady(function() {
 							handler : function() {
 								searchPanel.getForm().reset();
 							}
-						}, {
-							text : "导出CSV",
-							handler : exportHandler
-						}],
+						}
+//						, {
+//							text : "导出CSV",
+//							
+//							handler : exportHandler
+//						}
+						],
 				renderTo : 'search-panel'
 			});
 	// 查询结果grid

@@ -16,7 +16,7 @@
 	<constant name="struts.url.includeParams" value="none"/>
 	<constant name="struts.objectFactory" value="spring" />
 	<constant name="struts.multipart.maxSize" value="20971520"/>
-	<constant name="struts.multipart.saveDir" value="/usr/local/tmp/"/>	
+	<constant name="struts.multipart.saveDir" value="d:/tmp/"/>	
 
 	<package name="default" extends="struts-default">
 		

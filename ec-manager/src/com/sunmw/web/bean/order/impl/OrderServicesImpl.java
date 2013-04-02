@@ -71,6 +71,7 @@ public class OrderServicesImpl extends HibernateDaoSupport implements
 		oh.setOrderType("ORDER");
 		oh.setCtime(date);
 		oh.setStoreId((Integer) param.get("StoreId"));
+		oh.setCompanyId((Integer) param.get("CompanyId"));
 		oh.setSellerNick((String) param.get("SellerNick"));
 		// 支付时间--手工订单都应该是已付款的订单
 		oh.setPayTime((Date) param.get("PayTime"));

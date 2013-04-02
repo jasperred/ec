@@ -1,6 +1,6 @@
 package com.sunmw.web.action.customer;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import com.opensymphony.xwork2.ActionContext;
-import com.sunmw.web.bean.company.CompanyServices;
 import com.sunmw.web.bean.customer.CustomerServices;
-import com.sunmw.web.entity.Company;
 import com.sunmw.web.entity.UserLogin;
 import com.sunmw.web.util.WebConfigProperties;
 import com.sunmw.web.util.WebUtil;
@@ -266,15 +264,15 @@ public class CustomerSearchAction {
 				"生日", "省", "市", "区", "地址","邮编" };
 		String[] fields = new String[] {"custNo", "custName", "email",
 				"mobile", "sex", "birthDay","province","city","district","address","zipcode"};
-		String fileName = "customer_export.csv";
-		String path = WebConfigProperties.getProperties("file.export.path");
+		String fileName = "customer_export_"+WebUtil.formatDateString(new Date(), "yyyyMMddHHmmss")+".csv";
+		String path = WebConfigProperties.getProperties("report.customer.path");
 		if(WebUtil.isNotNull(ul.getCompanyId()))
 		{
 			path = path + ul.getCompanyId()+"/";
 		}
 		boolean b = WebUtil.exportCSV(headers, fields, l, path, fileName);
 		if (b) {
-			String url = WebConfigProperties.getProperties("file.export.url");
+			String url = WebConfigProperties.getProperties("report.customer.url");
 
 			if(WebUtil.isNotNull(ul.getCompanyId()))
 			{

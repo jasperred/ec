@@ -415,7 +415,7 @@ Ext.onReady(function() {
 	function itemView() {
 		if (winItemNew == undefined) {
 			var itemsearch = Ext.create('Ext.form.Panel', {
-						title : "会员查询",
+						title : "商品查询",
 						id : "item-search",
 						region : 'north',
 						frame : true, // 设置窗体为圆角
@@ -521,7 +521,7 @@ Ext.onReady(function() {
 								}]
 					});
 			var itemdetail = Ext.create('Ext.grid.Panel', {
-						title : "会员列表",
+						title : "商品列表",
 						id : "item-detail",
 						height : 360,
 						store : itemStore,
@@ -591,7 +591,7 @@ Ext.onReady(function() {
 									sortable : true
 								}],
 						bbar : Ext.create('Ext.PagingToolbar', {
-									store : store,
+									store : itemStore,
 									displayInfo : true,
 									displayMsg : '显示 {0} - {1}/共{2}条',
 									emptyMsg : "没有查询结果"
@@ -748,7 +748,7 @@ Ext.onReady(function() {
 		Ext.getCmp('payment').setValue(pay);
 	}
 	var winNew = null;
-	var store = null;
+	var custstore = null;
 	// 显示地址查询界面
 	function showCustView() {
 		if (winNew == undefined) {
@@ -851,7 +851,7 @@ Ext.onReady(function() {
 									}
 								}]
 					});
-			Ext.define('SearchModel', {
+			Ext.define('CustSearchModel', {
 				extend : 'Ext.data.Model',
 				fields : ['id', 'custNo', 'custName', 'email', 'mobile', 'tel',
 						'sex', {
@@ -861,8 +861,8 @@ Ext.onReady(function() {
 						}, 'province', 'city', 'district', 'zipcode', 'address'],
 				idProperty : 'id'
 			});
-			store = Ext.create('Ext.data.Store', {
-						model : 'SearchModel',
+			custstore = Ext.create('Ext.data.Store', {
+						model : 'CustSearchModel',
 						remoteSort : true,
 						pageSize : pageSize,
 						proxy : new Ext.data.HttpProxy({
@@ -893,14 +893,13 @@ Ext.onReady(function() {
 						title : "会员列表",
 						id : "cust-detail",
 						height : 360,
-						store : store,
+						store : custstore,
 						disableSelection : false,
 						loadMask : true,
 						multiSelect : false,
 						itemSelector : '.feed-list-item',
 						overItemCls : 'feed-list-item-hover',
 						viewConfig : {
-							id : 'gv',
 							trackOver : false,
 							stripeRows : false,
 							plugins : [{
@@ -981,7 +980,7 @@ Ext.onReady(function() {
 									sortable : true
 								}],
 						bbar : Ext.create('Ext.PagingToolbar', {
-									store : store,
+									store : custstore,
 									displayInfo : true,
 									displayMsg : '显示 {0} - {1}/共{2}条',
 									emptyMsg : "没有查询结果"
@@ -1011,7 +1010,7 @@ Ext.onReady(function() {
 	}
 	// 地址查询
 	function searchCustomer() {
-		store.on('beforeload', function() { // =======翻页时 查询条件
+		custstore.on('beforeload', function() { // =======翻页时 查询条件
 					var new_params = {
 						custNo : Ext.getCmp("s-cust-no").getValue(),
 						custName : Ext.getCmp("s-cust-name").getValue(),
@@ -1023,9 +1022,9 @@ Ext.onReady(function() {
 						birthDayEnd : Ext.getCmp("s-birth-day-end")
 								.getRawValue()
 					};
-					Ext.apply(store.proxy.extraParams, new_params);
+					Ext.apply(custstore.proxy.extraParams, new_params);
 				});
-		store.loadPage(1);
+		custstore.loadPage(1);
 	}
 	// 地址选择
 	function selectCust() {
