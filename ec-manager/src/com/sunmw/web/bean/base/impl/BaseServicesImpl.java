@@ -14,48 +14,65 @@ import com.sunmw.web.entity.UserLogin;
 import com.sunmw.web.entity.Warehouse;
 import com.sunmw.web.util.WebUtil;
 
-public class BaseServicesImpl extends HibernateDaoSupport implements BaseServices {
+public class BaseServicesImpl extends HibernateDaoSupport implements
+		BaseServices {
 
 	public List statusList(String type) {
-		List<StatusItem> siList = this.getHibernateTemplate().find("from StatusItem where StatusTypeId = '"+type+"' order by Sequence");
+		List<StatusItem> siList = this.getHibernateTemplate().find(
+				"from StatusItem where StatusTypeId = '" + type
+						+ "' order by Sequence");
 		return siList;
 	}
 
 	public List storeList() {
-		List<Store> storeList = this.getHibernateTemplate().find("from Store where Status = 'ACTIVE'");
+		List<Store> storeList = this.getHibernateTemplate().find(
+				"from Store where Status = 'ACTIVE'");
 		return storeList;
 	}
-	
-	public List storeListByCompany(Map param)
-	{
+
+	public List storeListByCompany(Map param) {
 		UserLogin ul = (UserLogin) param.get("LOGIN_INFO");
-		if(WebUtil.isNull(ul))
+		if (WebUtil.isNull(ul))
 			return null;
 		List<Store> storeList = null;
 
-		//分公司权限判断
-		if(WebUtil.isNull(ul.getUserType())||!ul.getUserType().equals("SYSTEM"))
-			storeList = this.getHibernateTemplate().find("from Store where Status = 'ACTIVE' and CompanyId = ?",ul.getCompanyId());
+		// 分公司权限判断
+		if (WebUtil.isNull(ul.getUserType())
+				|| !ul.getUserType().equals("SYSTEM"))
+			storeList = this.getHibernateTemplate().find(
+					"from Store where Status = 'ACTIVE' and CompanyId = ?",
+					ul.getCompanyId());
 		else
-			storeList = this.getHibernateTemplate().find("from Store where Status = 'ACTIVE'");			
+			storeList = this.getHibernateTemplate().find(
+					"from Store where Status = 'ACTIVE'");
 		return storeList;
 	}
-	
-	public List warehouseList()
-	{
-		List<Warehouse> whList = this.getHibernateTemplate().find("from Warehouse where Status = 'ACTIVE'");
+
+	public List warehouseList(Map param) {
+		UserLogin ul = (UserLogin) param.get("LOGIN_INFO");
+		if (WebUtil.isNull(ul))
+			return null;
+		String hql = "from Warehouse where Status = 'ACTIVE'";
+		// 分公司权限判断
+		if (WebUtil.isNull(ul.getUserType())
+				|| !ul.getUserType().equals("SYSTEM")) {
+			hql = hql + " and CompanyId = " + ul.getCompanyId();
+		}
+		List<Warehouse> whList = this.getHibernateTemplate().find(hql);
 		return whList;
 	}
 
 	@Override
 	public List provinceList() {
-		List<Province> provinceList = this.getHibernateTemplate().find("from Province order by id");
+		List<Province> provinceList = this.getHibernateTemplate().find(
+				"from Province order by id");
 		return provinceList;
 	}
 
 	@Override
 	public List unitList(String unitType) {
-		List<Unit> unitList = this.getHibernateTemplate().find("from Unit where UnitType = ? order by DispIndex",unitType);
+		List<Unit> unitList = this.getHibernateTemplate().find(
+				"from Unit where UnitType = ? order by DispIndex", unitType);
 		return unitList;
 	}
 

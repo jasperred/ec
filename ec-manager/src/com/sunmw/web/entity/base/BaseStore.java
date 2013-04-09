@@ -23,6 +23,8 @@ public abstract class BaseStore  implements Serializable {
 	public static String PROP_STORE_TYPE = "StoreType";
 	public static String PROP_ID = "Id";
 	public static String PROP_CTIME = "Ctime";
+	public static String PROP_LEVEL = "Level";
+	public static String PROP_WH_ID = "WhId";
 	public static String PROP_MUSER = "Muser";
 
 
@@ -53,6 +55,8 @@ public abstract class BaseStore  implements Serializable {
 	private java.lang.String storeType;
 	private java.lang.String status;
 	private java.lang.Integer companyId;
+	private java.lang.Integer whId;
+	private java.lang.Integer level;
 	private java.util.Date ctime;
 	private java.lang.String cuser;
 	private java.util.Date mtime;
@@ -146,6 +150,40 @@ public abstract class BaseStore  implements Serializable {
 	 */
 	public void setCompanyId (java.lang.Integer companyId) {
 		this.companyId = companyId;
+	}
+
+
+
+	/**
+	 * Return the value associated with the column: wh_id
+	 */
+	public java.lang.Integer getWhId () {
+		return whId;
+	}
+
+	/**
+	 * Set the value related to the column: wh_id
+	 * @param whId the wh_id value
+	 */
+	public void setWhId (java.lang.Integer whId) {
+		this.whId = whId;
+	}
+
+
+
+	/**
+	 * Return the value associated with the column: level
+	 */
+	public java.lang.Integer getLevel () {
+		return level;
+	}
+
+	/**
+	 * Set the value related to the column: level
+	 * @param level the level value
+	 */
+	public void setLevel (java.lang.Integer level) {
+		this.level = level;
 	}
 
 

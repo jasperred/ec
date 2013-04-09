@@ -84,13 +84,17 @@ public class StoreServicesImpl extends HibernateDaoSupport implements StoreServi
 			store.setMuser(ul.getUserName());
 		}
 		if(WebUtil.isNotNull(param.get("CompanyId")))
-			store.setCompanyId(new Integer((String)param.get("CompanyId")));
+			store.setCompanyId((Integer)param.get("CompanyId"));
 		if(WebUtil.isNotNull(param.get("Status")))
 			store.setStatus((String)param.get("Status"));
 		if(WebUtil.isNotNull(param.get("StoreName")))
 			store.setStoreName((String)param.get("StoreName"));
 		if(WebUtil.isNotNull(param.get("StoreType")))
 			store.setStoreType((String)param.get("StoreType"));
+		if(WebUtil.isNotNull(param.get("WhId")))
+			store.setWhId((Integer)param.get("WhId"));
+		if(WebUtil.isNotNull(param.get("Level")))
+			store.setLevel((Integer)param.get("Level"));
 		try {
 			if(store.getId()==null)
 			{
@@ -186,6 +190,8 @@ public class StoreServicesImpl extends HibernateDaoSupport implements StoreServi
 				r.put("Status", o.getStatus());
 				r.put("CompanyId", o.getCompanyId());
 				r.put("CompanyName", companyMap.get(o.getCompanyId()));
+				r.put("WhId", o.getWhId());
+				r.put("Level", o.getLevel());
 				rlist.add(r);
 			}
 		}
@@ -220,6 +226,8 @@ public class StoreServicesImpl extends HibernateDaoSupport implements StoreServi
 		info.put("Status", s.getStatus());
 		info.put("StoreName", s.getStoreName());
 		info.put("StoreType", s.getStoreType());
+		info.put("WhId", s.getWhId());
+		info.put("Level", s.getLevel());
 		result.put("StoreInfo", info);
 		return result;
 	}

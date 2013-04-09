@@ -27,7 +27,7 @@ public interface BaseServices {
 	 * 仓库列表
 	 * @return
 	 */
-	public List warehouseList();
+	public List warehouseList(Map param);
 	
 	/**
 	 * 省份列表

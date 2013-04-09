@@ -49,6 +49,34 @@
 			</result>
 			<interceptor-ref name="AuthorityStack"></interceptor-ref>
 		</action>
+		<!-- 仓库查询 -->
+	 	<action name="searchWarehouse" class="warehouseSearchAction" method="warehouseSearch">   
+	      	<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 仓库保存 -->
+	 	<action name="saveWarehouse" class="warehouseInfoAction" method="saveWarehouse">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>  
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 仓库信息 -->
+	 	<action name="warehouseInfo" class="warehouseInfoAction" method="warehouseInfo">   
+	      	<result type="json">
+		      <param name="includeProperties">storeId,whType,whName,companyId,status,whCode,reserveInv,allowNegativeInv,validTime,whId</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
+	 	<!-- 删除仓库 -->
+	 	<action name="deleteWarehouse" class="warehouseInfoAction" method="deleteWarehouse">   
+	      	<result type="json">
+		      <param name="includeProperties">success,message</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+	 	</action>
 		<!-- 盘点确认界面 -->
 		<action name="viewCheckConfirmAction" class="loginAction"
 			method="noAction">
@@ -111,6 +139,22 @@
 			<result name="success" type="dispatcher">
 				<param name="location">/application/warehouse/inv/invSearch.jsp</param>
 			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 库存查询 -->
+		<action name="searchInv" class="invSearchAction"
+			method="searchInv">
+			<result type="json">
+		      <param name="includeProperties">rowCount,resultList\[\d+\]\.*.*</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<!-- 导出库存 -->
+		<action name="exportInv" class="invSearchAction"
+			method="exportInv">
+			<result type="json">
+		      <param name="includeProperties">exportUrl</param>  
+		    </result>
 			<interceptor-ref name="AuthorityStack"></interceptor-ref>
 		</action>
 		<!-- 出库指示界面 -->

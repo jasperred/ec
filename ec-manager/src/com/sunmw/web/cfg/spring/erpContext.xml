@@ -69,6 +69,22 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="newServicesPointcut" />
 	</aop:config>
 	<!-- 基础信息 -->
+	<bean id="inventoryHelper" class="com.sunmw.web.bean.helper.InventoryHelper">
+	</bean>
+	<aop:config>  
+        <aop:aspect id="InventoryAspect" ref="inventoryAspectBean">  
+            <!--配置com.spring.service包下所有类或接口的所有方法-->  
+            <aop:pointcut id="orderService"  
+                expression="execution(* com.sunmw.web.bean.order.OrderServices.updateSingleOrderFrom*(java.util.Map,..)) and args(order,..)" />  
+            <aop:before pointcut-ref="orderService" method="doBefore"/>  
+            <aop:after-returning pointcut-ref="orderService" method="doAfterReturning" returning="result"/>  
+            <aop:around pointcut-ref="orderService" method="doAround"/>  
+            <aop:after-throwing pointcut-ref="orderService" method="doThrowing" throwing="ex"/>  
+        </aop:aspect>  
+    </aop:config>  
+      
+    <bean id="inventoryAspectBean" class="com.sunmw.web.bean.helper.InventoryAspect" /> 
+	<!-- 基础信息 -->
 	<bean id="baseServices" class="com.sunmw.web.bean.base.impl.BaseServicesImpl">
 		<property name="sessionFactory">
 			<ref local="sessionFactoryERP" />

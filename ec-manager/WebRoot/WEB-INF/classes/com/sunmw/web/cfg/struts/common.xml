@@ -30,6 +30,14 @@
 		   	</result>
 			<interceptor-ref name="AuthorityStack"></interceptor-ref>
 		</action>
+		<!-- 仓库列表 -->
+		<action name="warehouseListByCompany" class="warehouseListAction"
+			method="warehouseListByCompany">
+			<result type="json">
+		      <param name="root">warehouseList</param>   
+		   	</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
 		<!-- 订单状态列表 -->
 		<action name="erpStatusList" class="statusAction"
 			method="statusListByType">

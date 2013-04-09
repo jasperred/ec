@@ -46,6 +46,20 @@
 			length="10"
 		/>
 		<property
+			name="WhId"
+			column="wh_id"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Level"
+			column="level"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
 			name="Ctime"
 			column="ctime"
 			type="timestamp"

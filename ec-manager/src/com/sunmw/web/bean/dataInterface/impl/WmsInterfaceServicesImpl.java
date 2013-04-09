@@ -237,6 +237,8 @@ public class WmsInterfaceServicesImpl implements WmsInterfaceServices {
 			}
 		}
 		File directory = new File(path);
+		if(!directory.exists())
+			directory.mkdirs();
 		if (!directory.isDirectory()) {
 			result.put("Flag", "error");
 			result.put("Message", "库存目录不存在");

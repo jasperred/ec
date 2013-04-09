@@ -91,6 +91,13 @@
 			<ref local="wmsBaseServices" />
 		</property>
 	</bean>
+	<!-- 仓库保存 -->
+	<bean id="warehouseInfoAction"
+		class="com.sunmw.web.action.warehouse.base.WarehouseInfoAction" scope="request">
+		<property name="wmsBaseServices">
+			<ref bean="wmsBaseServices" />
+		</property>
+	</bean>
 	<!-- 盘点 -->
 	<bean id="wmsCheckServices" class="com.sunmw.web.bean.warehouse.check.impl.WarehouseCheckServicesImpl">
 		<property name="sessionFactory">

@@ -69,5 +69,12 @@ public interface InventoryServices {
 	 * @return
 	 */
 	public Map updateInvFlagOfShop(Map param);
+	
+	/**
+	 * 扣除单个订单的库存
+	 * @param orderNo
+	 * @return
+	 */
+	public Map deductOrderInventory(String orderNo);
 
 }

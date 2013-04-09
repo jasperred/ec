@@ -46,6 +46,13 @@
 			length="10"
 		/>
 		<property
+			name="AllowNegativeInv"
+			column="allow_negative_inv"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
 			name="WhCode"
 			column="wh_code"
 			type="string"
@@ -66,7 +73,32 @@
 			not-null="false"
 			length="10"
 		/>
-
+		<property
+			name="Ctime"
+			column="ctime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Cuser"
+			column="cuser"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+		<property
+			name="Mtime"
+			column="mtime"
+			type="timestamp"
+			not-null="false"
+		/>
+		<property
+			name="Muser"
+			column="muser"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
 
 	</class>	
 </hibernate-mapping>

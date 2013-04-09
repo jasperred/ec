@@ -23,6 +23,8 @@ public class StoreInfoAction {
 	private String storeName;
 	private String companyId;
 	private String status;
+	private String whId;
+	private String level;
 	
 	private String address;
 	private String appKey;
@@ -91,6 +93,22 @@ public class StoreInfoAction {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getWhId() {
+		return whId;
+	}
+
+	public void setWhId(String whId) {
+		this.whId = whId;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
 	}
 
 	public String getAddress() {
@@ -249,9 +267,13 @@ public class StoreInfoAction {
 		if(WebUtil.isNotNull(storeName))
 			param.put("StoreName", storeName);
 		if(WebUtil.isNotNull(companyId))
-			param.put("CompanyId", companyId);
+			param.put("CompanyId", new Integer(companyId));
 		if(WebUtil.isNotNull(status))
 			param.put("Status", status);
+		if(WebUtil.isNotNull(whId))
+			param.put("WhId", new Integer(whId));
+		if(WebUtil.isNotNull(level))
+			param.put("Level", new Integer(level));
 		Map r = this.storeServices.saveStore(param);
 		String flag = (String) r.get("Flag");
 		if(flag.equals("success"))

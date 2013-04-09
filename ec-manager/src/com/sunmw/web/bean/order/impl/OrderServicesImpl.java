@@ -68,6 +68,8 @@ public class OrderServicesImpl extends HibernateDaoSupport implements
 			}
 		}
 		oh.setOrderNo(genericOrderNo("MCOD", 6, "yyyyMMdd"));
+		//将订单号放入结果中
+		result.put("OrderNo", oh.getOrderNo());
 		oh.setOrderType("ORDER");
 		oh.setCtime(date);
 		oh.setStoreId((Integer) param.get("StoreId"));
@@ -1921,6 +1923,8 @@ public class OrderServicesImpl extends HibernateDaoSupport implements
 				oh.setCtime(date);
 			else
 				oh.setMtime(date);
+			//将订单号放入结果中
+			result.put("OrderNo", oh.getOrderNo());
 			oh.setBuyerNick((String) trade.get("BuyerNick"));
 			oh.setSellerNick((String) trade.get("SellerNick"));
 			// 发货时间
@@ -2380,6 +2384,8 @@ public class OrderServicesImpl extends HibernateDaoSupport implements
 				oh.setCtime(date);
 			else
 				oh.setMtime(date);
+			//将订单号放入结果中
+			result.put("OrderNo", oh.getOrderNo());
 			oh.setBuyerNick((String) order.get("buyerName"));
 			// 发货时间
 			if (WebUtil.isNotNull(order.get("sellerConsignmentTime"))

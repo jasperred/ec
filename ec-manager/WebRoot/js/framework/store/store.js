@@ -36,6 +36,16 @@ Ext.onReady(function() {
 							name : 'value'
 						}]
 			});
+			
+	var whliststore = Ext.create('Ext.data.Store', {
+				model : 'combo_model',
+				remoteSort : true,
+				proxy : {
+					type : 'ajax',
+					url : 'warehouseListByCompany'
+				}
+			});
+	whliststore.load();
 	Ext.regModel('unit_model', {
 				fields : [{
 							type : 'string',
@@ -130,7 +140,7 @@ Ext.onReady(function() {
 	Ext.define('SearchModel', {
 				extend : 'Ext.data.Model',
 				fields : ['StoreId', 'StoreName', 'StoreType', 'Status',
-						'rcnNo', 'CompanyId', 'CompanyName'],
+						'rcnNo', 'CompanyId', 'CompanyName','WhId','Level'],
 				idProperty : 'StoreId'
 			});
 
@@ -147,7 +157,7 @@ Ext.onReady(function() {
 								totalProperty : 'rowCount',
 								fields : ['StoreId', 'StoreName', 'StoreType',
 										'Status', 'rcnNo', 'CompanyId',
-										'CompanyName']
+										'CompanyName','WhId','Level']
 							},
 							simpleSortMode : true
 						}),
@@ -434,7 +444,23 @@ Ext.onReady(function() {
 									editable : false,
 									name : "CompanyId",
 									id : 'info-company-id'
-								})],
+								}), Ext.create('Ext.form.field.ComboBox', {
+									fieldLabel : '仓库',
+									displayField : 'name',
+									valueField : 'value',
+									store : whliststore,
+									allowBlank : true,
+									queryMode : 'remote',
+									editable : false,
+									name : "WhId",
+									id : 'info-wh-id'
+								}), {
+							xtype : 'numberfield',
+							fieldLabel : '级别',
+							allowBlank : true,
+							name : 'Level',
+							id : 'info-level'
+						}],
 
 				buttons : [{
 							text : '取消',
@@ -464,6 +490,10 @@ Ext.onReady(function() {
 													.getCmp("info-company-id")
 													.getValue(),
 											status : Ext.getCmp("info-status")
+													.getValue(),
+											whId : Ext.getCmp("info-wh-id")
+													.getValue(),
+											level : Ext.getCmp("info-level")
 													.getValue()
 										},
 										success : function(form, action) {
