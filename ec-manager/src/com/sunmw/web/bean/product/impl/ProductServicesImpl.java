@@ -36,6 +36,7 @@ public class ProductServicesImpl extends HibernateDaoSupport implements
 			return;
 		Map<String,Map> itemMap = new HashMap();
 		//整理淘宝ITEM
+		Map<Integer,Integer> storeCompanyMap = new HashMap();
 		for(Object[] obj:itemList)
 		{
 			TbItem ti = (TbItem)obj[0];
@@ -44,6 +45,11 @@ public class ProductServicesImpl extends HibernateDaoSupport implements
 			if(m==null)
 				m = new HashMap();
 			m.put("Item", ti);
+			if(storeCompanyMap.get(ti.getStoreId())==null)
+			{
+				List<Store> sl = this.getHibernateTemplate().find("from Store where id = ?",ti.getStoreId());
+				storeCompanyMap.put(ti.getStoreId(), sl.get(0).getCompanyId());
+			}
 			List skuList = (List) m.get("SkuList");
 			if(skuList==null)
 				skuList = new ArrayList();
@@ -86,12 +92,15 @@ public class ProductServicesImpl extends HibernateDaoSupport implements
 				im.setItemStatus("NORMAL");
 				im.setItemStdPrice(ti.getPrice());
 				im.setItemType("");
+				im.setCompanyId(storeCompanyMap.get(ti.getStoreId()));
 				session.save(im);
 			}
 			else
 			{
 				im = imList.get(0);
-				
+				if(im.getCompanyId()==null)
+					im.setCompanyId(storeCompanyMap.get(ti.getStoreId()));
+				session.update(im);
 			}
 			List<TbSku> tbSkuList = (List)m.get("SkuList");
 			//无SKU后面不执行
