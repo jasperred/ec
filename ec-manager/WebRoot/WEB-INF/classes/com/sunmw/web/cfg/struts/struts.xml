@@ -56,4 +56,5 @@
 	<include file="com/sunmw/web/cfg/struts/financial.xml"></include>
 	<include file="com/sunmw/web/cfg/struts/warehouse.xml"></include>
 	<include file="com/sunmw/web/cfg/struts/mobile.xml"></include>
+	<include file="com/sunmw/web/cfg/struts/jasper.xml"></include>
 </struts>

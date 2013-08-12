@@ -2,8 +2,6 @@ package com.sunmw.web.entity.base;
 
 import java.io.Serializable;
 
-import org.apache.struts2.json.annotations.JSON;
-
 
 /**
  * This is an object that contains data related to the order_head table.
@@ -50,6 +48,7 @@ public abstract class BaseOrderHead  implements Serializable {
 	public static String PROP_OBTAIN_POINT = "ObtainPoint";
 	public static String PROP_ID = "Id";
 	public static String PROP_CTIME = "Ctime";
+	public static String PROP_MUSER = "Muser";
 	public static String PROP_RECEIVER_ZIP = "ReceiverZip";
 	public static String PROP_ORIG_ORDER_NO = "OrigOrderNo";
 	public static String PROP_ORIG_ORDER_STATUS = "OrigOrderStatus";
@@ -57,6 +56,7 @@ public abstract class BaseOrderHead  implements Serializable {
 	public static String PROP_REQUEST_DATE = "RequestDate";
 	public static String PROP_REF_ORDER_ID = "RefOrderId";
 	public static String PROP_RECEIVER_DISTRICT = "ReceiverDistrict";
+	public static String PROP_CUSER = "Cuser";
 	public static String PROP_STORE_ID = "StoreId";
 	public static String PROP_ORDER_TYPE = "OrderType";
 	public static String PROP_RECEIVER_CITY = "ReceiverCity";
@@ -151,6 +151,8 @@ public abstract class BaseOrderHead  implements Serializable {
 	private java.lang.String postNos;
 	private java.util.Date payTime;
 	private java.lang.String payNo;
+	private java.lang.String cuser;
+	private java.lang.String muser;
 
 
 
@@ -332,7 +334,6 @@ public abstract class BaseOrderHead  implements Serializable {
 	/**
 	 * Return the value associated with the column: order_date
 	 */
-	@JSON(format="yyyy-MM-dd HH:mm:ss")
 	public java.util.Date getOrderDate () {
 		return orderDate;
 	}
@@ -350,7 +351,6 @@ public abstract class BaseOrderHead  implements Serializable {
 	/**
 	 * Return the value associated with the column: request_date
 	 */
-	@JSON(format="yyyy-MM-dd HH:mm:ss")
 	public java.util.Date getRequestDate () {
 		return requestDate;
 	}
@@ -368,7 +368,6 @@ public abstract class BaseOrderHead  implements Serializable {
 	/**
 	 * Return the value associated with the column: delivery_date
 	 */
-	@JSON(format="yyyy-MM-dd HH:mm:ss")
 	public java.util.Date getDeliveryDate () {
 		return deliveryDate;
 	}
@@ -1066,7 +1065,6 @@ public abstract class BaseOrderHead  implements Serializable {
 	/**
 	 * Return the value associated with the column: pay_time
 	 */
-	@JSON(format="yyyy-MM-dd HH:mm:ss")
 	public java.util.Date getPayTime () {
 		return payTime;
 	}
@@ -1094,6 +1092,40 @@ public abstract class BaseOrderHead  implements Serializable {
 	 */
 	public void setPayNo (java.lang.String payNo) {
 		this.payNo = payNo;
+	}
+
+
+
+	/**
+	 * Return the value associated with the column: cuser
+	 */
+	public java.lang.String getCuser () {
+		return cuser;
+	}
+
+	/**
+	 * Set the value related to the column: cuser
+	 * @param cuser the cuser value
+	 */
+	public void setCuser (java.lang.String cuser) {
+		this.cuser = cuser;
+	}
+
+
+
+	/**
+	 * Return the value associated with the column: muser
+	 */
+	public java.lang.String getMuser () {
+		return muser;
+	}
+
+	/**
+	 * Set the value related to the column: muser
+	 * @param muser the muser value
+	 */
+	public void setMuser (java.lang.String muser) {
+		this.muser = muser;
 	}
 
 

@@ -388,6 +388,20 @@
 			not-null="false"
 			length="60"
 		/>
+		<property
+			name="Cuser"
+			column="cuser"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="Muser"
+			column="muser"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
 
 
 	</class>	

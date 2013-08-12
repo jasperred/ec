@@ -97,6 +97,7 @@ public class ReportServicesImpl extends HibernateDaoSupport implements
 			m.put("ReceiverZip", oh.getReceiverZip());
 			m.put("ReceiverMobile", oh.getReceiverMobile());
 			m.put("ReceiverPhone", oh.getReceiverTel());
+			m.put("Cuser", oh.getCuser());
 			List<OrderNote> onList = this.getHibernateTemplate().find(
 					"from OrderNote where id.OrderHeadId = " + oh.getId());
 			if (onList != null) {

@@ -20,6 +20,7 @@ import com.sunmw.taobao.entity.TbPromotionDetail;
 import com.sunmw.taobao.entity.TbTrade;
 import com.sunmw.web.bean.order.OrderServices;
 import com.sunmw.web.entity.CheckRepeatNo;
+import com.sunmw.web.entity.Customer;
 import com.sunmw.web.entity.No;
 import com.sunmw.web.entity.OrderHead;
 import com.sunmw.web.entity.OrderItem;
@@ -51,6 +52,7 @@ public class OrderServicesImpl extends HibernateDaoSupport implements
 		List<Map> toList = (List) param.get("OrderItem");
 		OrderHead oh = null;
 		oh = new OrderHead();
+		oh.setCuser(ul.getCuser());
 		// 订单来源为手工订单
 		oh.setOrigin("MANUAL");
 		// 订单状态设置为未审核
@@ -669,7 +671,8 @@ public class OrderServicesImpl extends HibernateDaoSupport implements
 				"from OrderHead where id = " + orderHeadId);
 		if (orderHeadList == null || orderHeadList.size() == 0)
 			return null;
-		result.put("OrderHead", orderHeadList.get(0));
+		OrderHead oh = orderHeadList.get(0);
+		result.put("OrderHead", oh);
 		List<StatusItem> silist = this.getHibernateTemplate().find(
 				"from StatusItem where (StatusTypeId = 'ORDER' and StatusCode = '"
 						+ orderHeadList.get(0).getOrderStatus()
@@ -683,6 +686,13 @@ public class OrderServicesImpl extends HibernateDaoSupport implements
 					// (si.getStatusTypeId().equals("TAOBAO_ORDER"))
 					result.put("OrigOrderStatusDesc", si.getDescription());
 			}
+		}
+		//cust
+		if(oh.getCustId()!=null)
+		{
+			List<Customer> cl = this.getHibernateTemplate().find("from Customer where id = ?",oh.getCustId());
+			if(!WebUtil.isNullForList(cl))
+				result.put("Customer", cl.get(0));
 		}
 		// List<OrderTaobaoinfo> otList = this.getHibernateTemplate().find(
 		// "from OrderTaobaoinfo where id = " + orderHeadId);

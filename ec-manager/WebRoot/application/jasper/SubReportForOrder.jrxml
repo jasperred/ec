@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="340" pageHeight="297" columnWidth="242" leftMargin="49" rightMargin="49" topMargin="0" bottomMargin="0" uuid="01f0642e-ffea-4e17-8df5-df4288e2a4cf">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="orderDetail" uuid="7da0c102-49a0-4b78-8cae-cf77332d90f3">
+		<field name="name" class="java.lang.String"/>
+		<field name="skuProp1" class="java.lang.String"/>
+		<field name="skuProp2" class="java.lang.String"/>
+		<field name="price" class="java.lang.String"/>
+		<field name="qty" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\jasper\\桌面\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subReportData" class="java.util.List"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="orderItem" class="net.sf.jasperreports.engine.JRDataSource">
+		<fieldDescription><![CDATA[orderDetailJR]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String"/>
+	<field name="skuProp1" class="java.lang.String"/>
+	<field name="skuProp2" class="java.lang.String"/>
+	<field name="price" class="java.math.BigDecimal"/>
+	<field name="qty" class="java.lang.Number"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="dbc389dd-ca5f-4b6b-9b80-b97abc7d300d" x="0" y="0" width="242" height="21"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="orderDetail" uuid="2a698765-007e-48c5-8a24-a58d19a68288">
+						<datasetParameter name="REPORT_DATA_SOURCE">
+							<datasetParameterExpression><![CDATA[$F{orderItem}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="21" width="242">
+						<textField>
+							<reportElement uuid="78330b09-8cc1-4eab-8742-3fd17d4fe240" x="0" y="0" width="40" height="20"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{REPORT_COUNT}.toString()]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="4bbad683-68de-4b1f-b356-ea4fd6ba2def" x="107" y="0" width="35" height="20"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$F{skuProp1}!=null?$F{skuProp1}:""]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="9b27ac68-8474-4220-8638-c17f585f4938" x="142" y="0" width="35" height="20"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$F{skuProp2}!=null?$F{skuProp2}:""]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="4232ca17-0fda-4a65-ae8c-7cabc89435d4" x="212" y="0" width="30" height="20"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$F{qty}!=null?$F{qty}:"0"]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="c199ec6e-2ee9-4d2c-93c4-f3730e5f9574" x="177" y="0" width="35" height="20"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$F{price}!=null?$F{price}:"0"]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="b8737630-9a63-4e0d-886a-9b7aa2e887cc" x="40" y="0" width="67" height="20"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$F{name}!=null?$F{name}:""]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

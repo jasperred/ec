@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="340" pageHeight="396" columnWidth="242" leftMargin="49" rightMargin="49" topMargin="0" bottomMargin="0" uuid="91b68e66-4406-4c21-a1b4-7fa844fc7d8d">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="119"/>
+	<property name="ireport.y" value="698"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\jasper\\桌面\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="title" class="java.lang.String">
+		<fieldDescription><![CDATA[title]]></fieldDescription>
+	</field>
+	<field name="custNo" class="java.lang.String"/>
+	<field name="receiverName" class="java.lang.String"/>
+	<field name="receiverMobile" class="java.lang.String"/>
+	<field name="receiverState" class="java.lang.String"/>
+	<field name="receiverCity" class="java.lang.String"/>
+	<field name="receiverDistrict" class="java.lang.String"/>
+	<field name="receiverAddress" class="java.lang.String"/>
+	<field name="totalFee" class="java.lang.String"/>
+	<field name="discountFee" class="java.lang.String"/>
+	<field name="postFee" class="java.lang.String"/>
+	<field name="payment" class="java.lang.String"/>
+	<field name="subReportName" class="java.lang.String"/>
+	<field name="subReportDS" class="java.lang.String"/>
+	<field name="subReportData" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="227" splitType="Stretch">
+			<textField>
+				<reportElement uuid="cccfe679-50ec-4c94-a1c5-46c5158447da" x="0" y="19" width="242" height="28"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title}!=null?$F{title}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="57db33eb-c9cb-4026-bff8-fb42efb11665" x="0" y="47" width="50" height="20"/>
+				<textElement/>
+				<text><![CDATA[客户信息:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7f02ec67-a585-4208-aabd-6a8399b3dc74" x="100" y="47" width="50" height="20"/>
+				<textElement/>
+				<text><![CDATA[会员编号:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="427154e4-b91e-4884-ae22-0f522928586a" mode="Transparent" x="0" y="67" width="40" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font isUnderline="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[收货人]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d3f7dbc-33da-4967-a743-b1064c39bd5b" x="122" y="67" width="40" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[手机号]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9086be07-914b-4f3c-9659-985f3b801029" x="150" y="47" width="92" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{custNo}!=null?$F{custNo}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="274e45df-e616-4ce3-8746-4a796cd640e7" x="40" y="67" width="82" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{receiverName}!=null?$F{receiverName}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3e214d5d-8361-451a-9f4a-270af894bafd" x="162" y="67" width="80" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{receiverMobile}!=null?$F{receiverMobile}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3f777e93-2c4d-416d-b16d-2674a150069d" x="0" y="87" width="40" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[省份]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="07d971c2-6f14-4a82-b295-bd75fb246efc" x="40" y="87" width="62" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{receiverState}!=null?$F{receiverState}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="56a1ba36-6e90-4c74-ad66-6d1db7f01913" x="102" y="87" width="30" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[城市]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="987de35c-69fc-4369-92cf-fb4d1ecaad62" x="132" y="87" width="40" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{receiverCity}!=null?$F{receiverCity}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="da5f1d50-467f-48e2-8936-d7d1a100e85a" x="172" y="87" width="30" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[地区]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ae7b1849-884c-40d1-84e6-66b842c21a49" x="202" y="87" width="40" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{receiverDistrict}!=null?$F{receiverDistrict}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="84a7294e-d8e0-46ae-91a3-ee1e587e95a2" x="0" y="107" width="40" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[地址]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b8180e13-7625-4e8f-9642-e785486d0e5e" x="40" y="107" width="202" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{receiverAddress}!=null?$F{receiverAddress}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9d2d9ce4-cf18-4199-a0e1-48c0cb1cb442" x="0" y="127" width="242" height="20"/>
+				<textElement/>
+				<text><![CDATA[订购信息：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="04f27786-61c1-42f8-80ad-299ba8477299" x="172" y="147" width="30" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[运费]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="15a10482-4a40-4518-a0cb-81cf9db9cb16" x="0" y="167" width="40" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[实付金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="42e7c69e-4d82-4a6b-84c2-2a110fdf2a36" x="102" y="147" width="30" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[折扣]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0edd48ad-7e8a-4d4a-9b49-04e3a66bf5b7" x="202" y="147" width="40" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{postFee}!=null?$F{postFee}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c60f5947-83f1-4696-bacc-67541a605aea" x="132" y="147" width="40" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{discountFee}!=null?$F{discountFee}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="64e1ed57-362c-441a-af3f-0f11d879933e" x="0" y="147" width="40" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[总金额]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="06cdc5c6-21a2-4b9f-ba3a-f2fea3b1ce01" x="40" y="147" width="62" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{totalFee}!=null?$F{totalFee}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c8268960-d88b-460a-a020-c0e77945d198" x="40" y="167" width="202" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{payment}!=null?$F{payment}:""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0044386e-b23d-40cc-b767-3ed4e4d4d86e" x="0" y="187" width="242" height="20"/>
+				<textElement/>
+				<text><![CDATA[商品信息：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="89a8c5fb-1750-419f-a8b6-9ed241e94a21" x="0" y="207" width="40" height="20"/>
+				<textElement/>
+				<text><![CDATA[商品编号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="21cdda5d-c5a5-47c9-aa28-6c34f7c6fbac" x="40" y="207" width="67" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[商品名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="585f5030-c817-42b0-a4a4-5a59781b629e" x="107" y="207" width="35" height="20"/>
+				<textElement/>
+				<text><![CDATA[颜色]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d520990a-2bdb-43bf-8893-445c06fe4060" x="142" y="207" width="35" height="20"/>
+				<textElement/>
+				<text><![CDATA[尺码]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="489f8e23-daa5-4bb0-82e2-86ee2d81a543" x="177" y="207" width="35" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[单价]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6a27defa-02c0-4eb3-97a1-343b7598a6f5" x="212" y="207" width="30" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[数量]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<elementGroup>
+				<subreport>
+					<reportElement uuid="7d7ec68b-f985-4128-a46d-8cc9c3959500" x="-21" y="0" width="21" height="18"/>
+					<dataSourceExpression><![CDATA[$F{subReportData}]]></dataSourceExpression>
+					<subreportExpression><![CDATA[$F{subReportName}]]></subreportExpression>
+				</subreport>
+			</elementGroup>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="24">
+			<staticText>
+				<reportElement uuid="4f600ad2-3c9b-409e-a975-053f69d79191" x="0" y="0" width="242" height="20"/>
+				<textElement/>
+				<text><![CDATA[顾客签名：]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

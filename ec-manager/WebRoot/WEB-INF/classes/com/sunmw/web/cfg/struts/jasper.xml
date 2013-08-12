@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="jasper" extends="struts-default,jasperreports-default">
+		<interceptors>
+			<interceptor name="authority"
+				class="com.sunmw.web.common.interceptor.AuthorityInterceptor"></interceptor>
+			<interceptor-stack name="AuthorityStack">
+				<interceptor-ref name="authority">
+					<param name="excludeMethods">welcome,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="paramsPrepareParamsStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>
+		<action name="orderPrintPdf" class="com.sunmw.web.action.jasper.OrderAction"
+			method="orderPrint">
+			<result name="success" type="jasper">
+				<param name="location">/application/jasper/JackwalkPrintTemplate.jasper</param>
+				<param name="dataSource">orderList</param>
+				<param name="reportParameters">map</param> 
+				<param name="format">PDF</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+		<action name="orderPrintExcel" class="com.sunmw.web.action.jasper.OrderAction"
+			method="orderPrint">
+			<result name="success" type="jasper">
+				<param name="location">/application/jasper/JackwalkPrintTemplate.jasper</param>
+				<param name="dataSource">orderList</param>
+				<param name="reportParameters">map</param> 
+				<param name="format">XLS</param>
+			</result>
+			<interceptor-ref name="AuthorityStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

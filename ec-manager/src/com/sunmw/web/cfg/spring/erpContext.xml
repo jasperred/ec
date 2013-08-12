@@ -161,6 +161,13 @@
 			<ref bean="orderServices" />
 		</property>
 	</bean>
+	<!-- 订单打印 -->
+	<bean id="orderPringAction" class="com.sunmw.web.action.jasper.OrderAction"
+		scope="request">
+		<property name="orderServices">
+			<ref bean="orderServices" />
+		</property>
+	</bean>
 	<!-- 订单任务 -->
 	<bean id="orderTaskServices" class="com.sunmw.web.bean.data.impl.OrderTaskServicesImpl">
 		<property name="sessionFactory">
